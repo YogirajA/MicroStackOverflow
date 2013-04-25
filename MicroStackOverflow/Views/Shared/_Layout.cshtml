@@ -1,16 +1,48 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    @RenderBody()
-
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body class="mainContainer" id="top" data-spy="scroll" data-target=".subnav" data-offset="80">
+        <div>
+            <div class="navbar navbar-fixed-top navbar-inverse">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand" href="/">Micro StackOverflow</a>
+                        <div class="nav-collapse">
+                            <ul class="nav pull-left">
+                                 <li>@Html.ActionLink("Questions","Index","Questions")</li>
+                            </ul>
+                        </div>
+                        <!-- /.nav-collapse -->
+                    </div>
+                </div><!-- /navbar-inner -->
+            </div>
+        </div>
+        <div class="container">
+            @RenderBody()
+            <div class="clearfix"></div>
+            <hr>
+            <footer id="footer">
+                <p class="pull-right"><a href="#top">Back to top</a></p>
+                <div class="links">
+                    <a href="http://aradhye.com">aradhye.com</a>
+                </div>
+                <p align="center">&copy; </p>
+            </footer>
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/libs")
+        @RenderSection("scripts", required: false)
+    </body>
 </html>
+
