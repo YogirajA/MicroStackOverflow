@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.12.1\lib\net40\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.SimpleCRUD">
+      <HintPath>..\packages\Dapper.SimpleCRUD.1.2.0\lib\net40\Dapper.SimpleCRUD.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,8 +45,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Dapper\PostsServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dapper.DAL\Dapper.DAL.csproj">
+      <Project>{00e0cfc4-3df3-4d7c-909e-be9ce9c677d5}</Project>
+      <Name>Dapper.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Massive.DAL\Massive.DAL.csproj">
+      <Project>{6d285681-416a-4ba2-bbc3-bf4f3087fae9}</Project>
+      <Name>Massive.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PetaPoco.DAL\PetaPoco.DAL.csproj">
+      <Project>{53a7b770-0c83-4ce9-8980-a25849fadc5d}</Project>
+      <Name>PetaPoco.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Massive\" />
+    <Folder Include="Petapoco\" />
+    <Folder Include="SimpleData\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
