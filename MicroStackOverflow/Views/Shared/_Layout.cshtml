@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using StackExchange.Profiling
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -6,6 +7,7 @@
         <title>@ViewBag.Title</title>
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
+        
     </head>
     <body class="mainContainer" id="top" data-spy="scroll" data-target=".subnav" data-offset="80">
         <div>
@@ -42,6 +44,8 @@
         </div>
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/libs")
+        @* Make sure you've added this one line to your LAYOUT or MASTER PAGE *@
+        @MiniProfiler.RenderIncludes()
         @RenderSection("scripts", required: false)
     </body>
 </html>

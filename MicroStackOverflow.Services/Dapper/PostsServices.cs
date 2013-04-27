@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using Dapper.DAL.Infrastructure;
 using Dapper.DAL.Models;
 
 namespace MicroStackOverflow.Services.Dapper
 {
-    public class PostsServices
+    public interface IPostsServices
+    {
+        IEnumerable<Post> GetAllPosts();
+        IEnumerable<PostSearResults> Search(PostSearchModel postSearchModel);
+    }
+
+    public class PostsServices : IPostsServices
     {
         private readonly IDatabaseContext _databaseContext;
 
@@ -26,9 +31,41 @@ namespace MicroStackOverflow.Services.Dapper
             }
         }
 
-        public PostSearResults Search(PostSearchModel postSearchModel)
+        public IEnumerable<PostSearResults> Search(PostSearchModel postSearchModel)
         {
-            return new PostSearResults();
+            DynamicParameters param;
+            var sql = GetSearchSQL(postSearchModel,out param);
+            using (var db = _databaseContext)
+            {
+
+                var posts = db.Connection.Query<PostSearResults>(sql, param);
+                return posts.ToList();
+            }
+        }
+
+        private static string GetSearchSQL(PostSearchModel postSearchModel, out DynamicParameters param)
+        {
+            var postQuery = new PostsQuery();
+            param = new DynamicParameters();
+            if (!string.IsNullOrEmpty(postSearchModel.Body))
+            {
+                param.AddDynamicParams(new {@body = "%" + postSearchModel.Body + "%"});
+                postQuery = postQuery.ByBody();
+            }
+            if (!string.IsNullOrEmpty(postSearchModel.Tags))
+            {
+                param.AddDynamicParams(new {@tags = "%" + postSearchModel.Tags + "%"});
+                postQuery = postQuery.ByTags();
+            }
+            
+
+            // ReSharper disable RedundantAnonymousTypePropertyName
+            param.AddDynamicParams(new {@startRow = postSearchModel.StartRowNum});
+            // ReSharper restore RedundantAnonymousTypePropertyName
+            // ReSharper disable RedundantAnonymousTypePropertyName
+            param.AddDynamicParams(new {@endRow = postSearchModel.EndRowNum});
+            // ReSharper restore RedundantAnonymousTypePropertyName
+            return postQuery.Bind();
         }
 
         //insert 
@@ -36,9 +73,8 @@ namespace MicroStackOverflow.Services.Dapper
         //update
     }
 
-    public class PostSearResults
+    public class PostSearResults : Post
     {
-        public IEnumerable<Post> Posts { get; set; }
         public int Total { get; set; }
     }
 
@@ -47,7 +83,8 @@ namespace MicroStackOverflow.Services.Dapper
         public int PostTypeId { get; set; }
         public string Body { get; set; }
         public string Tags { get; set; }
-
+        public int StartRowNum { get; set; }
+        public int EndRowNum { get; set; }
     }
 
     public class PostsQuery
@@ -81,7 +118,7 @@ namespace MicroStackOverflow.Services.Dapper
 
         public PostsQuery ByTags()
         {
-            _queryBuilder.Append(@"AND Tags like  @Tags ");
+            _queryBuilder.Append(@"AND Tags like  @tags ");
             return this;
         }
 

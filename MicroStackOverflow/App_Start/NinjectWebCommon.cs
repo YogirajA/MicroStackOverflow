@@ -1,3 +1,7 @@
+using System.Configuration;
+using Dapper.DAL.Infrastructure;
+using MicroStackOverflow.Services.Dapper;
+
 [assembly: WebActivator.PreApplicationStartMethod(typeof(MicroStackOverflow.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(MicroStackOverflow.App_Start.NinjectWebCommon), "Stop")]
 
@@ -53,6 +57,10 @@ namespace MicroStackOverflow.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            var databaseContext = new DatabaseContext(ConfigurationManager.ConnectionStrings["StackOverflow"].ConnectionString);
+            kernel.Bind<IPostsServices>()
+                  .To<PostsServices>()
+                  .WithConstructorArgument("databaseContext", databaseContext);
         }        
     }
 }
