@@ -112,13 +112,15 @@ namespace MicroStackOverflow.Services.Dapper
 
         public PostsQuery ByBody()
         {
-            _queryBuilder.Append(@"AND Body like  @body ");
+           // _queryBuilder.Append(@"AND Body like  @body ");
+            _queryBuilder.Append(@"AND CONTAINS(Body,@body) ");
             return this;
         }
 
         public PostsQuery ByTags()
         {
-            _queryBuilder.Append(@"AND Tags like  @tags ");
+            //_queryBuilder.Append(@"AND Tags like  @tags ");
+            _queryBuilder.Append(@"AND CONTAINS(Tags,@tags) ");
             return this;
         }
 
