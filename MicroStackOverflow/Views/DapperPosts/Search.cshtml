@@ -60,7 +60,7 @@
                     column.For(x => x.CommentCount);
                     column.For(x => x.AnswerCount);
                     column.For(x => x.CreationDate);
-                    //column.For(x => Html.ActionLink("Edit", "Edit", new {id = x.Id}));
+                    column.For(x => Html.ActionLink("Edit", "Edit", new {id = x.Id}));
 
                 }).Attributes(@class=>"table table-bordered table-striped table-condensed table-hover") 
         </div>

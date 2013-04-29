@@ -68,5 +68,10 @@ namespace MicroStackOverflow.Controllers
         {
             return View();
         }
+
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
     }
 }

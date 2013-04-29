@@ -1,7 +1,17 @@
-﻿@model MicroStackOverflow.Models.PostsSearchModel 
+﻿@model dynamic
 @{
     ViewBag.Title = "title";
 }
 <div>
     @HtmlBlocks.VenueNavPill(this)
+</div>
+<div>
+    <hgroup class="title">
+        <h2>Dapper dot net posts</h2>
+    </hgroup>
+    <div class="well row-fluid">
+        <div class="span6">
+            <span> This section of the site uses Dapper dot net to access the data </span>
+        </div>
+    </div>
 </div>
