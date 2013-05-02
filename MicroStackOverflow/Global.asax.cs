@@ -10,6 +10,7 @@ using AutoMapper;
 using Dapper.DAL.Models;
 using MicroStackOverflow.Models;
 using MicroStackOverflow.Services.Dapper;
+using MicroStackOverflow.Services.Models;
 using StackExchange.Profiling;
 
 namespace MicroStackOverflow
@@ -23,7 +24,7 @@ namespace MicroStackOverflow
         {
             Mapper.CreateMap<Post, PostModel>();
             Mapper.CreateMap<PostModel, Post>();
-            Mapper.CreateMap<PostSearchModel, PostsSearchModel>();
+            Mapper.CreateMap<SearchPostsBy, PostsSearchModel>();
            
         }
         protected void Application_BeginRequest()

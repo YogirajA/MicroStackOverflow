@@ -2,7 +2,7 @@
 <#
 	// Settings
     ConnectionStringName = "";			// Uses last connection string in config if not specified
-    Namespace = "";
+    Namespace = "PetaPoco.DAL.Models";
     RepoName = "";
     GenerateOperations = true;
 	GeneratePocos = true;

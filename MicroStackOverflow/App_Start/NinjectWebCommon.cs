@@ -58,8 +58,8 @@ namespace MicroStackOverflow.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             var databaseContext = new DatabaseContext(ConfigurationManager.ConnectionStrings["StackOverflow"].ConnectionString);
-            kernel.Bind<IPostsServices>()
-                  .To<PostsServices>()
+            kernel.Bind<IDapperPostsServices>()
+                  .To<DapperDapperPostsServices>()
                   .WithConstructorArgument("databaseContext", databaseContext);
         }        
     }

@@ -7,17 +7,18 @@ using AutoMapper;
 using Dapper.DAL.Models;
 using MicroStackOverflow.Models;
 using MicroStackOverflow.Services.Dapper;
+using MicroStackOverflow.Services.Models;
 using PagedList;
 
 namespace MicroStackOverflow.Controllers
 {
     public class DapperPostsController : Controller
     {
-        private readonly IPostsServices _postsServices;
+        private readonly IDapperPostsServices _dapperPostsServices;
 
-        public DapperPostsController(IPostsServices postsServices)
+        public DapperPostsController(IDapperPostsServices dapperPostsServices)
         {
-            _postsServices = postsServices;
+            _dapperPostsServices = dapperPostsServices;
         }
 
         public ActionResult Index()
@@ -25,7 +26,7 @@ namespace MicroStackOverflow.Controllers
             return View();
         }
 
-        public ActionResult Search(int? page, Models.PostsSearchModel postSearchModel)
+        public ActionResult Search(int? page, PostsSearchModel postSearchModel)
         {
             PostSearch(page, postSearchModel);
             
@@ -39,7 +40,7 @@ namespace MicroStackOverflow.Controllers
             const int pageSize = 10;
             var startRowNum = (pageNumber - 1) * pageSize;
             var endRowNum = startRowNum + pageSize;
-            var postSearchModel = new PostSearchModel
+            var postSearchModel = new SearchPostsBy
                 {
                     StartRowNum = startRowNum,
                     EndRowNum = endRowNum,
@@ -48,7 +49,7 @@ namespace MicroStackOverflow.Controllers
                     Tags= searchModel.Tags
                 };
             
-            var results = _postsServices.Search(postSearchModel).ToList();
+            var results = _dapperPostsServices.Search(postSearchModel).ToList();
             var firstResult = results.Any() ? results.FirstOrDefault() : null;
             if (firstResult != null)
             {
@@ -77,7 +78,7 @@ namespace MicroStackOverflow.Controllers
             post.OwnerUserId = 1; // Atwood
             post.OwnerDisplayName = "Jeff Atwood";
 
-            var id = _postsServices.AddNewPost(post);
+            var id = _dapperPostsServices.AddNewPost(post);
 
             return RedirectToActionPermanent("Edit",new{@id =id});
         }
@@ -87,7 +88,7 @@ namespace MicroStackOverflow.Controllers
             PostModel postModel=null;
             if (id.HasValue)
             {
-                var post = _postsServices.GetPost(id.Value);
+                var post = _dapperPostsServices.GetPost(id.Value);
                 postModel = Mapper.Map<PostModel>(post);
             }
             
@@ -99,7 +100,7 @@ namespace MicroStackOverflow.Controllers
             if (ModelState.IsValid)
             {
                 var post = Mapper.Map<Post>(postModel);
-                _postsServices.UpdatePost(post);
+                _dapperPostsServices.UpdatePost(post);
             }
             ViewBag.IsSuccessful = false;
             return View(postModel);

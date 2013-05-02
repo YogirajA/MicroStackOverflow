@@ -37,7 +37,7 @@ using System.Linq;
 using System.Web;
 using PetaPoco;
 
-namespace StackOverflow
+namespace PetaPoco.DAL.Models
 {
 
 	public partial class StackOverflowDB : Database
@@ -135,58 +135,6 @@ namespace StackOverflow
 
 
     
-	[TableName("PostTypes")]
-
-
-	[PrimaryKey("Id", autoIncrement=false)]
-
-	[ExplicitColumns]
-    public partial class PostType : StackOverflowDB.Record<PostType>  
-    {
-
-
-
-		[Column] public int Id { get; set; }
-
-
-
-
-
-		[Column] public string Type { get; set; }
-
-
-
-	}
-
-    
-	[TableName("PostsTags")]
-
-
-	[ExplicitColumns]
-    public partial class PostsTag : StackOverflowDB.Record<PostsTag>  
-    {
-
-
-
-		[Column] public int PostId { get; set; }
-
-
-
-
-
-		[Column] public string Tag { get; set; }
-
-
-
-
-
-		[Column] public string SiteId { get; set; }
-
-
-
-	}
-
-    
 	[TableName("Badges")]
 
 
@@ -276,7 +224,9 @@ namespace StackOverflow
 	[TableName("Posts")]
 
 
-	[PrimaryKey("Id", autoIncrement=false)]
+	[PrimaryKey("Id")]
+
+
 
 	[ExplicitColumns]
     public partial class Post : StackOverflowDB.Record<Post>  
@@ -591,6 +541,58 @@ namespace StackOverflow
 
 
 		[Column] public string Name { get; set; }
+
+
+
+	}
+
+    
+	[TableName("PostTypes")]
+
+
+	[PrimaryKey("Id", autoIncrement=false)]
+
+	[ExplicitColumns]
+    public partial class PostType : StackOverflowDB.Record<PostType>  
+    {
+
+
+
+		[Column] public int Id { get; set; }
+
+
+
+
+
+		[Column] public string Type { get; set; }
+
+
+
+	}
+
+    
+	[TableName("PostsTags")]
+
+
+	[ExplicitColumns]
+    public partial class PostsTag : StackOverflowDB.Record<PostsTag>  
+    {
+
+
+
+		[Column] public int PostId { get; set; }
+
+
+
+
+
+		[Column] public string Tag { get; set; }
+
+
+
+
+
+		[Column] public string SiteId { get; set; }
 
 
 
