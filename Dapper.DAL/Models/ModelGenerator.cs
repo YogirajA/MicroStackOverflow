@@ -3,7 +3,7 @@
 // 
 // The following connection settings were used to generate this file
 // 
-//     Connection String Name: `Northwind`
+//     Connection String Name: `StackOverflow`
 //     Provider:               `System.Data.SqlClient`
 //     Connection String:      `Data Source=tron\sqlexpressonmbp;Initial Catalog=StackOverflow;Integrated Security=True`
 //     Include Views:          `True`
@@ -14,27 +14,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dapper.DAL.Models
 {
-    /// <summary>
-    /// A class which represents the PostTypes table.
-    /// </summary>
-	[Table("PostTypes")]
-	public partial class PostType
-	{
-		public virtual int Id { get; set; }
-		public virtual string Type { get; set; }
-	}
-
-    /// <summary>
-    /// A class which represents the PostsTags table.
-    /// </summary>
-	[Table("PostsTags")]
-	public partial class PostsTag
-	{
-		public virtual int PostId { get; set; }
-		public virtual string Tag { get; set; }
-		public virtual string SiteId { get; set; }
-	}
-
     /// <summary>
     /// A class which represents the Badges table.
     /// </summary>
@@ -68,6 +47,7 @@ namespace Dapper.DAL.Models
 	[Table("Posts")]
 	public partial class Post
 	{
+		[Key]
 		public virtual int Id { get; set; }
 		public virtual int? PostTypeId { get; set; }
 		public virtual int? AcceptedAnswerId { get; set; }
@@ -151,6 +131,27 @@ namespace Dapper.DAL.Models
 	{
 		public virtual int Id { get; set; }
 		public virtual string Name { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the PostTypes table.
+    /// </summary>
+	[Table("PostTypes")]
+	public partial class PostType
+	{
+		public virtual int Id { get; set; }
+		public virtual string Type { get; set; }
+	}
+
+    /// <summary>
+    /// A class which represents the PostsTags table.
+    /// </summary>
+	[Table("PostsTags")]
+	public partial class PostsTag
+	{
+		public virtual int PostId { get; set; }
+		public virtual string Tag { get; set; }
+		public virtual string SiteId { get; set; }
 	}
 
 }

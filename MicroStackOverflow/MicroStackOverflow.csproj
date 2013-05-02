@@ -271,6 +271,7 @@
     <Content Include="Views\DapperPosts\Search.cshtml" />
     <Content Include="Views\DapperPosts\Add.cshtml" />
     <Content Include="Views\DapperPosts\Edit.cshtml" />
+    <Content Include="Views\DapperPosts\_postFields.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

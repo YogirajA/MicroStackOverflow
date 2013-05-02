@@ -68,10 +68,41 @@ namespace MicroStackOverflow.Controllers
         {
             return View();
         }
-
-        public ActionResult Edit(int id)
+        [HttpPost]
+        public ActionResult Add(PostModel postModel)
         {
-            return View();
+            var post = Mapper.Map<Post>(postModel);
+            post.CreationDate = DateTime.Now;
+
+            post.OwnerUserId = 1; // Atwood
+            post.OwnerDisplayName = "Jeff Atwood";
+
+            var id = _postsServices.AddNewPost(post);
+
+            return RedirectToActionPermanent("Edit",new{@id =id});
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            PostModel postModel=null;
+            if (id.HasValue)
+            {
+                var post = _postsServices.GetPost(id.Value);
+                postModel = Mapper.Map<PostModel>(post);
+            }
+            
+            return View(postModel);
+        }
+        [HttpPost]
+        public ActionResult Edit(PostModel postModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var post = Mapper.Map<Post>(postModel);
+                _postsServices.UpdatePost(post);
+            }
+            ViewBag.IsSuccessful = false;
+            return View(postModel);
         }
     }
 }

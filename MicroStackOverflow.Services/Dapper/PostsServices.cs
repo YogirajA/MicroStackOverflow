@@ -12,6 +12,9 @@ namespace MicroStackOverflow.Services.Dapper
     {
         IEnumerable<Post> GetAllPosts();
         IEnumerable<PostSearResults> Search(PostSearchModel postSearchModel);
+        int AddNewPost(Post post);
+        Post GetPost(int id);
+        int UpdatePost(Post post);
     }
 
     public class PostsServices : IPostsServices
@@ -29,6 +32,38 @@ namespace MicroStackOverflow.Services.Dapper
             {
                return db.Connection.GetList<Post>().ToList();
             }
+        }
+
+        public Post GetPost(int id)
+        {
+            using (var db = _databaseContext)
+            {
+                return db.Connection.Get<Post>(id);
+            }
+        }
+        public int UpdatePost(Post post)
+        {
+            int returnVal;
+            using (var db = _databaseContext)
+            {
+                var connection = db.Connection;
+                var transaction = connection.BeginTransaction();
+                returnVal = db.Connection.Update(post, transaction);
+                transaction.Commit();
+            }
+            return returnVal;
+        }
+        public int AddNewPost(Post post)
+        {
+            int returnVal;
+            using (var db = _databaseContext)
+            {
+                var connection = db.Connection;
+                var transaction = connection.BeginTransaction();
+                returnVal = db.Connection.Insert(post, transaction);
+                transaction.Commit();
+            }
+            return returnVal;
         }
 
         public IEnumerable<PostSearResults> Search(PostSearchModel postSearchModel)
@@ -49,12 +84,14 @@ namespace MicroStackOverflow.Services.Dapper
             param = new DynamicParameters();
             if (!string.IsNullOrEmpty(postSearchModel.Body))
             {
-                param.AddDynamicParams(new {@body = "%" + postSearchModel.Body + "%"});
+                //param.AddDynamicParams(new {@body = "%" + postSearchModel.Body + "%"});
+                param.AddDynamicParams(new {@body = postSearchModel.Body});
                 postQuery = postQuery.ByBody();
             }
             if (!string.IsNullOrEmpty(postSearchModel.Tags))
             {
-                param.AddDynamicParams(new {@tags = "%" + postSearchModel.Tags + "%"});
+               // param.AddDynamicParams(new {@tags = "%" + postSearchModel.Tags + "%"});
+                param.AddDynamicParams(new {@tags = postSearchModel.Tags});
                 postQuery = postQuery.ByTags();
             }
             
@@ -113,14 +150,14 @@ namespace MicroStackOverflow.Services.Dapper
         public PostsQuery ByBody()
         {
            // _queryBuilder.Append(@"AND Body like  @body ");
-            _queryBuilder.Append(@"AND CONTAINS(Body,@body) ");
+            _queryBuilder.Append(@"AND FREETEXT(Body,@body) ");
             return this;
         }
 
         public PostsQuery ByTags()
         {
             //_queryBuilder.Append(@"AND Tags like  @tags ");
-            _queryBuilder.Append(@"AND CONTAINS(Tags,@tags) ");
+            _queryBuilder.Append(@"AND FREETEXT(Tags,@tags) ");
             return this;
         }
 

@@ -22,6 +22,7 @@ namespace MicroStackOverflow
         private static void ConfigureMapsForAutoMapper()
         {
             Mapper.CreateMap<Post, PostModel>();
+            Mapper.CreateMap<PostModel, Post>();
             Mapper.CreateMap<PostSearchModel, PostsSearchModel>();
            
         }
