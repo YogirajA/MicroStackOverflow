@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using MicroStackOverflow.Models;
@@ -106,8 +105,11 @@ namespace MicroStackOverflow.Controllers
 
         public ActionResult Query()
         {
+           
             var posts = GetTopFewPosts();
             return View(posts);
+            
+            
         }
 
         public IEnumerable<PostModel> GetTopFewPosts()

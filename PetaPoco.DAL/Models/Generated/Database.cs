@@ -33,9 +33,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Web;
 using PetaPoco;
+using StackExchange.Profiling;
+using StackExchange.Profiling.Data;
 
 namespace PetaPoco.DAL.Models
 {
@@ -86,7 +90,6 @@ namespace PetaPoco.DAL.Models
 			if (_instance==this)
 				_instance=null;
 		}
-        
 
 		public class Record<T> where T:new()
 		{

@@ -1,6 +1,9 @@
 ﻿using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using PetaPoco.DAL.Models;
+using StackExchange.Profiling;
+using StackExchange.Profiling.Data;
 
 namespace PetaPoco.DAL.Infrastructure
 {
@@ -19,7 +22,7 @@ namespace PetaPoco.DAL.Infrastructure
         public StackOverflowDB StackOverflowDB
         {
             get
-            {
+            {   
                 return _stackOverflowDB ?? (_stackOverflowDB = new StackOverflowDB(_connectionStringName));
             }
         }

@@ -20,7 +20,7 @@ namespace MicroStackOverflow.Services.Dapper
         {
             using (var db = _databaseContext)
             {
-               return db.Connection.GetList<Post>().ToList();
+               return db.ProfiledConnection.GetList<Post>().ToList();
             }
         }
 
@@ -28,16 +28,16 @@ namespace MicroStackOverflow.Services.Dapper
         {
             using (var db = _databaseContext)
             {
-                return db.Connection.Get<Post>(id);
+                return db.ProfiledConnection.Get<Post>(id);
             }
         }
         public int UpdatePost(Post post)
         {
             int returnVal;
             using (var db = _databaseContext)
-            using (var transaction = db.Connection.BeginTransaction())
-            {  
-                returnVal = db.Connection.Update(post, transaction);
+            using (var transaction = db.ProfiledConnection.BeginTransaction())
+            {
+                returnVal = db.ProfiledConnection.Update(post, transaction);
                 transaction.Commit();
             }
             return returnVal;
@@ -46,9 +46,9 @@ namespace MicroStackOverflow.Services.Dapper
         {
             int returnVal;
             using (var db = _databaseContext)
-            using( var transaction =  db.Connection.BeginTransaction())
-            {  
-                returnVal = db.Connection.Insert(post, transaction);
+            using (var transaction = db.ProfiledConnection.BeginTransaction())
+            {
+                returnVal = db.ProfiledConnection.Insert(post, transaction);
                 transaction.Commit();
             }
             return returnVal;
@@ -61,7 +61,7 @@ namespace MicroStackOverflow.Services.Dapper
             using (var db = _databaseContext)
             {
 
-                var posts = db.Connection.Query<PostSearResults>(sql, param);
+                var posts = db.ProfiledConnection.Query<PostSearResults>(sql, param);
                 return posts.ToList();
             }
         }
