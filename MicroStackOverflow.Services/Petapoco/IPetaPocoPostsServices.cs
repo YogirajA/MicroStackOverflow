@@ -12,6 +12,5 @@ namespace MicroStackOverflow.Services.Petapoco
         Post AddNewPost(Post post);
         Post GetPost(int id);
         int UpdatePost(Post post);
-        Post AddNewPostIfNew(Post post);
     }
 }

@@ -5,14 +5,14 @@
     ViewBag.Title = "title";
 }
 <div>
-    @HtmlBlocks.VenueNavPillForDapper(this)
+    @HtmlBlocks.NavPillForDapper(this)
 </div>
 
 <div>
     <hgroup class="title">
-        <h2>Search venues</h2>
+        <h2>Search posts</h2>
     </hgroup>
-    @using (Html.BeginForm(null, null, FormMethod.Get, new {@class = "well form-horizontal", id = "VenueSearchForm"}))
+    @using (Html.BeginForm(null, null, FormMethod.Get, new {@class = "well form-horizontal", id = "PostsSearchForm"}))
     {
         @Html.ValidationSummary(true)
         <div class="row-fluid">

@@ -1,7 +1,6 @@
-﻿@using System.Linq.Expressions
-@using System.Web.Mvc
+﻿@using System.Web.Mvc
 @using Microsoft.Web.Mvc.Html
-@helper VenueNavPillForDapper(WebViewPage page)
+@helper NavPillForDapper(WebViewPage page)
 {
     <ul class="nav nav-pills">
         @{
@@ -21,7 +20,7 @@
     </ul>
 }
 
-@helper VenueNavPillForPetaPoco(WebViewPage page)
+@helper NavPillForPetaPoco(WebViewPage page)
 {
     <ul class="nav nav-pills">
         @{
@@ -37,9 +36,6 @@
         </li>
         <li class="@(actionName=="Add"?"active":"")">
             <a href="@page.Url.Action("Add","PetaPocoPosts",routeValues:null)">Add</a>
-        </li>
-        <li class="@(actionName=="AddIFNew"?"active":"")">
-            <a href="@page.Url.Action("AddIFNew","PetaPocoPosts",routeValues:null)">AddIfNew</a>
         </li>
          <li class="@(actionName=="Query"?"active":"")">
             <a href="@page.Url.Action("Query","PetaPocoPosts",routeValues:null)">Query</a>

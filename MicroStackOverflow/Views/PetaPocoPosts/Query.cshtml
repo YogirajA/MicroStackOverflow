@@ -1,10 +1,31 @@
-﻿@model dynamic
-
+﻿@using MvcContrib.UI.Grid
+@model IEnumerable<MicroStackOverflow.Models.PostModel>
 @{
     ViewBag.Title = "title";
-    
 }
 <div>
-    @HtmlBlocks.VenueNavPillForPetaPoco(this)
+    @HtmlBlocks.NavPillForPetaPoco(this)
 </div>
-<h2>title</h2>
+
+<div>
+    <hgroup class="title">
+        <h2>Get few top posts</h2>
+    </hgroup>
+    @if(Model !=null &&  Model.Any())
+    {    
+        <div class="row-fluid">
+            @Html.Grid(Model).Columns(column =>
+                {
+                    column.For(x => x.Title);
+                    column.For(x => x.Score);
+                    column.For(x => x.ViewCount);
+                    column.For(x => x.FavoriteCount);
+                    column.For(x => x.CommentCount);
+                    column.For(x => x.AnswerCount);
+                    column.For(x => x.CreationDate);
+                    column.For(x => Html.ActionLink("Edit", "Edit", new {id = x.Id}));
+
+                }).Attributes(@class=>"table table-bordered table-striped table-condensed table-hover") 
+        </div>
+    }
+</div>

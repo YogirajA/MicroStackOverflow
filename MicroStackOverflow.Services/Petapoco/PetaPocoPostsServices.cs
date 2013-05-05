@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using MicroStackOverflow.Services.Models;
 using PetaPoco;
 using PetaPoco.DAL.Infrastructure;
@@ -21,7 +20,10 @@ namespace MicroStackOverflow.Services.Petapoco
             using (var db = _databaseContext.StackOverflowDB)
             {
                 var posts = db.Query<Post>("Select * from Posts"); //queyr uses yield return .. fetch gets everything
-                return posts.ToList();
+                foreach (var post in posts)
+                {
+                    yield return post;
+                }
             }
         }
 
@@ -61,19 +63,7 @@ namespace MicroStackOverflow.Services.Petapoco
             using (var db = _databaseContext.StackOverflowDB)
             using (var transaction = db.GetTransaction())
             {
-                var returnObject = db.Insert(post);
-                transaction.Complete();
-                return returnObject as Post;
-
-            }
-        }
-
-        public Post AddNewPostIfNew(Post post)
-        {
-            using (var db = _databaseContext.StackOverflowDB)
-            using (var transaction = db.GetTransaction())
-            {
-                if (db.IsNew(post))
+                if (db.IsNew(post))   // helps to avoid multiple inserts
                 {
                     var returnObject = db.Insert(post);
                     transaction.Complete();

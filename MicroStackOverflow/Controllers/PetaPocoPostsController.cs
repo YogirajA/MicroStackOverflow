@@ -104,20 +104,22 @@ namespace MicroStackOverflow.Controllers
             return View(postModel);
         }
 
-
-        public ActionResult AddIfNew()
-        {
-            return View();
-        }
-
-        public ActionResult FetchVsQuery()
-        {
-            return View();
-        }
-
         public ActionResult Query()
         {
-            return View();
+            var posts = GetTopFewPosts();
+            return View(posts);
+        }
+
+        public IEnumerable<PostModel> GetTopFewPosts()
+        {
+            var listOfPosts = new List<PostModel>();
+            foreach (var post in _petaPocoPostsServices.GetAllPosts())
+            {
+                 listOfPosts.Add(GetPostModel(post));
+                 if(post.Id > 10)
+                     break;
+            }
+            return listOfPosts;
         }
     }
 }

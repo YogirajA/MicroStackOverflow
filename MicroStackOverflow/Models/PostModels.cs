@@ -6,7 +6,8 @@ using PagedList;
 
 namespace MicroStackOverflow.Models
 {
-     public class PostsSearchModel
+    
+    public class PostsSearchModel
     {
         public PostsSearchModel()
         {
