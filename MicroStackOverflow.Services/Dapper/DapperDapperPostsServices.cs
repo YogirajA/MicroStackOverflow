@@ -35,9 +35,8 @@ namespace MicroStackOverflow.Services.Dapper
         {
             int returnVal;
             using (var db = _databaseContext)
-            {
-                var connection = db.Connection;
-                var transaction = connection.BeginTransaction();
+            using (var transaction = db.Connection.BeginTransaction())
+            {  
                 returnVal = db.Connection.Update(post, transaction);
                 transaction.Commit();
             }
@@ -47,9 +46,8 @@ namespace MicroStackOverflow.Services.Dapper
         {
             int returnVal;
             using (var db = _databaseContext)
-            {
-                var connection = db.Connection;
-                var transaction = connection.BeginTransaction();
+            using( var transaction =  db.Connection.BeginTransaction())
+            {  
                 returnVal = db.Connection.Insert(post, transaction);
                 transaction.Commit();
             }

@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
-using Dapper.DAL.Models;
 using MicroStackOverflow.Models;
-using MicroStackOverflow.Services.Dapper;
 using MicroStackOverflow.Services.Models;
 using StackExchange.Profiling;
+using DapperPost = Dapper.DAL.Models.Post;
+using PetaPocoPost = PetaPoco.DAL.Models.Post;
 
 namespace MicroStackOverflow
 {
@@ -22,8 +18,13 @@ namespace MicroStackOverflow
     {
         private static void ConfigureMapsForAutoMapper()
         {
-            Mapper.CreateMap<Post, PostModel>();
-            Mapper.CreateMap<PostModel, Post>();
+            Mapper.CreateMap<DapperPost, PostModel>();
+            Mapper.CreateMap<PostModel, DapperPost>();
+
+            Mapper.CreateMap<PetaPocoPost, PostModel>();
+            Mapper.CreateMap<PostModel, PetaPocoPost>();
+
+
             Mapper.CreateMap<SearchPostsBy, PostsSearchModel>();
            
         }

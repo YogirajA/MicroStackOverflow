@@ -6,33 +6,21 @@ namespace PetaPoco.DAL.Infrastructure
 {
     public class DatabaseContext : IDatabaseContext
     {
-        private readonly string _connectionString;
-        private SqlConnection _connection;
+        private readonly string _connectionStringName;
+       
         private StackOverflowDB _stackOverflowDB;
 
-        public DatabaseContext(string connectionString)
+        public DatabaseContext(string connectionStringName)
         {
-            _connectionString = connectionString;
+            _connectionStringName = connectionStringName;
         }
 
-        public SqlConnection Connection
-        {
-            get
-            {
-                if (_connection == null)
-                    _connection = new SqlConnection(_connectionString);
-
-                if (_connection.State != ConnectionState.Open)
-                    _connection.Open();
-
-                return _connection;
-            }
-        }
+  
         public StackOverflowDB StackOverflowDB
         {
             get
             {
-                return _stackOverflowDB ?? (_stackOverflowDB = new StackOverflowDB(_connectionString));
+                return _stackOverflowDB ?? (_stackOverflowDB = new StackOverflowDB(_connectionStringName));
             }
         }
         public void Dispose()
@@ -40,8 +28,7 @@ namespace PetaPoco.DAL.Infrastructure
             if (_stackOverflowDB != null)
                 _stackOverflowDB.Dispose();
 
-            if (_connection != null && _connection.State == ConnectionState.Open)
-                _connection.Close();
+            
         }
     }
 }

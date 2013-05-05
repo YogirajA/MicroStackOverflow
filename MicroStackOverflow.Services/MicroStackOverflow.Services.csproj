@@ -49,7 +49,8 @@
     <Compile Include="Dapper\PostsQuery.cs" />
     <Compile Include="Dapper\DapperDapperPostsServices.cs" />
     <Compile Include="Models\SearchPostsBy.cs" />
-    <Compile Include="Petapoco\PetaPocoDapperPostsService.cs" />
+    <Compile Include="Petapoco\IPetaPocoPostsServices.cs" />
+    <Compile Include="Petapoco\PetaPocoPostsServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿@using System.Linq.Expressions
 @using System.Web.Mvc
 @using Microsoft.Web.Mvc.Html
-@helper VenueNavPill(WebViewPage page)
+@helper VenueNavPillForDapper(WebViewPage page)
 {
     <ul class="nav nav-pills">
         @{
@@ -17,6 +17,32 @@
         </li>
         <li class="@(actionName=="Add"?"active":"")">
             <a href="@page.Url.Action("Add","DapperPosts",routeValues:null)">Add</a>
+        </li>
+    </ul>
+}
+
+@helper VenueNavPillForPetaPoco(WebViewPage page)
+{
+    <ul class="nav nav-pills">
+        @{
+            var actionName = Path.GetFileNameWithoutExtension(page.VirtualPath);
+             
+         }
+        <li class="@(actionName=="Index"?"active":"")">
+            @page.Html.ActionLink("Posts Home","Index","PetaPocoPosts")
+        </li>
+        
+        <li class="@(actionName=="Search"?"active":"")">
+            <a href="@page.Url.Action("Search","PetaPocoPosts",routeValues:null)">Search</a>   
+        </li>
+        <li class="@(actionName=="Add"?"active":"")">
+            <a href="@page.Url.Action("Add","PetaPocoPosts",routeValues:null)">Add</a>
+        </li>
+        <li class="@(actionName=="AddIFNew"?"active":"")">
+            <a href="@page.Url.Action("AddIFNew","PetaPocoPosts",routeValues:null)">AddIfNew</a>
+        </li>
+         <li class="@(actionName=="Query"?"active":"")">
+            <a href="@page.Url.Action("Query","PetaPocoPosts",routeValues:null)">Query</a>
         </li>
     </ul>
 }

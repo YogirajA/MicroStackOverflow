@@ -156,6 +156,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DapperPostsController.cs" />
+    <Compile Include="Controllers\PetaPocoPostsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -271,7 +272,14 @@
     <Content Include="Views\DapperPosts\Search.cshtml" />
     <Content Include="Views\DapperPosts\Add.cshtml" />
     <Content Include="Views\DapperPosts\Edit.cshtml" />
-    <Content Include="Views\DapperPosts\_postFields.cshtml" />
+    <Content Include="Views\Shared\_postFields.cshtml" />
+    <Content Include="Views\PetaPocoPosts\Index.cshtml" />
+    <Content Include="Views\PetaPocoPosts\Add.cshtml" />
+    <Content Include="Views\PetaPocoPosts\Edit.cshtml" />
+    <Content Include="Views\PetaPocoPosts\Search.cshtml" />
+    <Content Include="Views\PetaPocoPosts\AddIfNew.cshtml" />
+    <Content Include="Views\PetaPocoPosts\Query.cshtml" />
+    <Content Include="Views\PetaPocoPosts\FetchVsQuery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -284,9 +292,21 @@
       <Project>{00E0CFC4-3DF3-4D7C-909E-BE9CE9C677D5}</Project>
       <Name>Dapper.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Massive.DAL\Massive.DAL.csproj">
+      <Project>{6d285681-416a-4ba2-bbc3-bf4f3087fae9}</Project>
+      <Name>Massive.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MicroStackOverflow.Services\MicroStackOverflow.Services.csproj">
       <Project>{5ED1B2C0-6AE9-4DE5-A875-F5FCAA437FBB}</Project>
       <Name>MicroStackOverflow.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PetaPoco.DAL\PetaPoco.DAL.csproj">
+      <Project>{53a7b770-0c83-4ce9-8980-a25849fadc5d}</Project>
+      <Name>PetaPoco.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleData.DAL\SimpleData.DAL.csproj">
+      <Project>{c5a6baaa-25bd-4811-ad34-411dd0ecc80a}</Project>
+      <Name>SimpleData.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

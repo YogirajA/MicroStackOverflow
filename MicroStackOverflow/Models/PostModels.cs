@@ -43,8 +43,10 @@ namespace MicroStackOverflow.Models
         public DateTime? LastEditDate { get; set; }
         public DateTime? LastActivityDate { get; set; }
         [DisplayName("Title")]
+        [AllowHtml]
         public string Title { get; set; }
         [DisplayName("Tags")]
+        [AllowHtml]
         public string Tags { get; set; }
         public int? AnswerCount { get; set; }
         public int? CommentCount { get; set; }

@@ -1,6 +1,8 @@
 using System.Configuration;
-using Dapper.DAL.Infrastructure;
 using MicroStackOverflow.Services.Dapper;
+using MicroStackOverflow.Services.Petapoco;
+using DapperDatabaseContext = Dapper.DAL.Infrastructure.DatabaseContext;
+using PetaPocoDatabaseContext = PetaPoco.DAL.Infrastructure.DatabaseContext;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(MicroStackOverflow.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(MicroStackOverflow.App_Start.NinjectWebCommon), "Stop")]
@@ -57,10 +59,17 @@ namespace MicroStackOverflow.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            var databaseContext = new DatabaseContext(ConfigurationManager.ConnectionStrings["StackOverflow"].ConnectionString);
+            var connectionStringName = "StackOverflow";
+            var connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
+            var dapperdatabaseContext = new DapperDatabaseContext(connectionString);
             kernel.Bind<IDapperPostsServices>()
                   .To<DapperDapperPostsServices>()
-                  .WithConstructorArgument("databaseContext", databaseContext);
+                  .WithConstructorArgument("databaseContext", dapperdatabaseContext);
+
+            var petapocoContext = new PetaPocoDatabaseContext(connectionStringName);
+            kernel.Bind<IPetaPocoPostsServices>()
+                  .To<PetaPocoPostsServices>()
+                  .WithConstructorArgument("databaseContext", petapocoContext);
         }        
     }
 }
