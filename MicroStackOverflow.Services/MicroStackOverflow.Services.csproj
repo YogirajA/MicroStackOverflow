@@ -36,6 +36,12 @@
     <Reference Include="Dapper.SimpleCRUD">
       <HintPath>..\packages\Dapper.SimpleCRUD.1.2.0\lib\net40\Dapper.SimpleCRUD.dll</HintPath>
     </Reference>
+    <Reference Include="Simple.Data">
+      <HintPath>..\packages\Simple.Data.Core.0.18.3.1\lib\net40\Simple.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.Data.Ado">
+      <HintPath>..\packages\Simple.Data.Ado.0.18.3.1\lib\net40\Simple.Data.Ado.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +58,7 @@
     <Compile Include="Petapoco\IPetaPocoPostsServices.cs" />
     <Compile Include="Petapoco\PetaPocoPostsServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleData\SimpleDataPostsServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dapper.DAL\Dapper.DAL.csproj">
@@ -66,10 +73,13 @@
       <Project>{53a7b770-0c83-4ce9-8980-a25849fadc5d}</Project>
       <Name>PetaPoco.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SimpleData.DAL\SimpleData.DAL.csproj">
+      <Project>{c5a6baaa-25bd-4811-ad34-411dd0ecc80a}</Project>
+      <Name>SimpleData.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Massive\" />
-    <Folder Include="SimpleData\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
