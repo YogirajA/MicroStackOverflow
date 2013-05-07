@@ -158,6 +158,7 @@
     <Compile Include="Controllers\DapperPostsController.cs" />
     <Compile Include="Controllers\PetaPocoPostsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\SimpleDataPostsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -278,6 +279,7 @@
     <Content Include="Views\PetaPocoPosts\Edit.cshtml" />
     <Content Include="Views\PetaPocoPosts\Search.cshtml" />
     <Content Include="Views\PetaPocoPosts\Query.cshtml" />
+    <Content Include="Views\SimpleDataPosts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,7 +4,7 @@ using SimpleData.DAL.Infrastructure;
 
 namespace MicroStackOverflow.Services.SimpleData
 {
-    public class SimpleDataPostsServices
+    public class SimpleDataPostsServices : ISimpleDataPostsServices
     {
         private readonly IDatabaseContext _databaseContext;
 
@@ -18,6 +18,8 @@ namespace MicroStackOverflow.Services.SimpleData
             dynamic expression1 = true;
             dynamic expression2 = true;
             dynamic expression3 = true;
+            const int pageSize = 10;
+            var recordsToSkip = pageSize*(searchPostsBy.PageNumber-1);
             if (searchPostsBy.PostTypeId > 0)
             {
                 expression1 = _databaseContext.StackOverflowDb.Posts.PostTypeId == searchPostsBy.PostTypeId;
@@ -25,16 +27,19 @@ namespace MicroStackOverflow.Services.SimpleData
             }
             if (string.IsNullOrEmpty(searchPostsBy.Tags))
             {
-                expression2 = _databaseContext.StackOverflowDb.Posts.Tags == searchPostsBy.Tags;
+                expression2 = _databaseContext.StackOverflowDb.Posts.Tags.Like(searchPostsBy.Tags);
                 
             }
             if (string.IsNullOrEmpty(searchPostsBy.Body))
             {
-                expression3 = _databaseContext.StackOverflowDb.Posts.Body == searchPostsBy.Body;
+                expression3 = _databaseContext.StackOverflowDb.Posts.Body.Like(searchPostsBy.Body);
             }
 
             dynamic searchExpression = expression1 && expression2 && expression3;
-            var results = _databaseContext.StackOverflowDb.Posts.All.Where(searchExpression);
+            var results = _databaseContext.StackOverflowDb
+                           .Posts.All.Where(searchExpression)
+                           .OrderByCreateDate()
+                           .Skip(recordsToSkip).Take(pageSize);
             return results;
         }
         public void Update(dynamic post)

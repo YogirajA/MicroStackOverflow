@@ -58,6 +58,7 @@
     <Compile Include="Petapoco\IPetaPocoPostsServices.cs" />
     <Compile Include="Petapoco\PetaPocoPostsServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleData\ISimpleDataPostsServices.cs" />
     <Compile Include="SimpleData\SimpleDataPostsServices.cs" />
   </ItemGroup>
   <ItemGroup>
