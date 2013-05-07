@@ -674,7 +674,7 @@ ko.exportSymbol('utils.domNodeDisposal.removeDisposeCallback', ko.utils.domNodeD
 
         // Note that there's still an issue in IE < 9 whereby it will discard comment nodes that are the first child of
         // a descendant node. For example: "<div><!-- mycomment -->abc</div>" will get parsed as "<div>abc</div>"
-        // This won't affect anyone who has referenced jQuery, and there's always the workaround of inserting a dummy node
+        // This won't affect anyone who has referenced jQuery, and there's always the workaround of AddNewPosting a dummy node
         // (possibly a text node) in front of the comment. So, KO does not attempt to workaround this IE issue automatically at present.
 
         // Trim whitespace, otherwise indexOf won't work as expected
@@ -1696,7 +1696,7 @@ ko.exportSymbol('expressionRewriting.preProcessBindings', ko.expressionRewriting
 // For backward compatibility, define the following aliases. (Previously, these function names were misleading because
 // they referred to JSON specifically, even though they actually work with arbitrary JavaScript object literal expressions.)
 ko.exportSymbol('jsonExpressionRewriting', ko.expressionRewriting);
-ko.exportSymbol('jsonExpressionRewriting.insertPropertyAccessorsIntoJson', ko.expressionRewriting.preProcessBindings);(function() {
+ko.exportSymbol('jsonExpressionRewriting.AddNewPostPropertyAccessorsIntoJson', ko.expressionRewriting.preProcessBindings);(function() {
     // "Virtual elements" is an abstraction on top of the usual DOM API which understands the notion that comment nodes
     // may be used to represent hierarchy (in addition to the DOM's natural hierarchy).
     // If you call the DOM-manipulating functions on ko.virtualElements, you will be able to read and write the state
@@ -1819,7 +1819,7 @@ ko.exportSymbol('jsonExpressionRewriting.insertPropertyAccessorsIntoJson', ko.ex
             if (!insertAfterNode) {
                 ko.virtualElements.prepend(containerNode, nodeToInsert);
             } else if (!isStartComment(containerNode)) {
-                // Insert after insertion point
+                // Insert after AddNewPostion point
                 if (insertAfterNode.nextSibling)
                     containerNode.insertBefore(nodeToInsert, insertAfterNode.nextSibling);
                 else
@@ -1885,7 +1885,7 @@ ko.exportSymbol('virtualElements', ko.virtualElements);
 ko.exportSymbol('virtualElements.allowedBindings', ko.virtualElements.allowedBindings);
 ko.exportSymbol('virtualElements.emptyNode', ko.virtualElements.emptyNode);
 //ko.exportSymbol('virtualElements.firstChild', ko.virtualElements.firstChild);     // firstChild is not minified
-ko.exportSymbol('virtualElements.insertAfter', ko.virtualElements.insertAfter);
+ko.exportSymbol('virtualElements.AddNewPostAfter', ko.virtualElements.insertAfter);
 //ko.exportSymbol('virtualElements.nextSibling', ko.virtualElements.nextSibling);   // nextSibling is not minified
 ko.exportSymbol('virtualElements.prepend', ko.virtualElements.prepend);
 ko.exportSymbol('virtualElements.setDomNodeChildren', ko.virtualElements.setDomNodeChildren);
@@ -2964,7 +2964,7 @@ ko.exportSymbol('__tr_ambtns', ko.templateRewriting.applyMemoizedBindingsToNextS
     }
 
     function activateBindingsOnContinuousNodeArray(continuousNodeArray, bindingContext) {
-        // To be used on any nodes that have been rendered by a template and have been inserted into some parent element
+        // To be used on any nodes that have been rendered by a template and have been AddNewPosted into some parent element
         // Walks through continuousNodeArray (which *must* be continuous, i.e., an uninterrupted sequence of sibling nodes, because
         // the algorithm for walking them relies on this), and for each top-level item in the virtual-element sense,
         // (1) Does a regular "applyBindings" to associate bindingContext with this node and to activate any non-memoized bindings
@@ -3279,15 +3279,15 @@ ko.exportSymbol('utils.compareArrays', ko.utils.compareArrays);
     //   map the array elements to arrays of DOM nodes, concatenate together all these arrays, and use them to populate the container DOM node
     // * Next time we're given the same combination of things (with the array possibly having mutated), update the container DOM node
     //   so that its children is again the concatenation of the mappings of the array elements, but don't re-map any array elements that we
-    //   previously mapped - retain those nodes, and just insert/delete other ones
+    //   previously mapped - retain those nodes, and just AddNewPost/delete other ones
 
-    // "callbackAfterAddingNodes" will be invoked after any "mapping"-generated nodes are inserted into the container node
+    // "callbackAfterAddingNodes" will be invoked after any "mapping"-generated nodes are AddNewPosted into the container node
     // You can use this, for example, to activate bindings on those nodes.
 
     function fixUpNodesToBeMovedOrRemoved(contiguousNodeArray) {
         // Before moving, deleting, or replacing a set of nodes that were previously outputted by the "map" function, we have to reconcile
         // them against what is in the DOM right now. It may be that some of the nodes have already been removed from the document,
-        // or that new nodes might have been inserted in the middle, for example by a binding. Also, there may previously have been
+        // or that new nodes might have been AddNewPosted in the middle, for example by a binding. Also, there may previously have been
         // leading comment nodes (created by rewritten string-based templates) that have since been removed during binding.
         // So, this function translates the old "map" output array into its best guess of what set of current DOM nodes should be removed.
         //
@@ -3296,7 +3296,7 @@ ko.exportSymbol('utils.compareArrays', ko.utils.compareArrays);
         //       These most likely correspond to memoization nodes that were already removed during binding
         //       See https://github.com/SteveSanderson/knockout/pull/440
         //   [B] We want to output a contiguous series of nodes that are still in the document. So, ignore any nodes that
-        //       have already been removed, and include any nodes that have been inserted among the previous collection
+        //       have already been removed, and include any nodes that have been AddNewPosted among the previous collection
 
         // Rule [A]
         while (contiguousNodeArray.length && !ko.utils.domNodeIsAttachedToDocument(contiguousNodeArray[0]))
@@ -3326,7 +3326,7 @@ ko.exportSymbol('utils.compareArrays', ko.utils.compareArrays);
         var dependentObservable = ko.dependentObservable(function() {
             var newMappedNodes = mapping(valueToMap, index) || [];
 
-            // On subsequent evaluations, just replace the previously-inserted DOM nodes
+            // On subsequent evaluations, just replace the previously-AddNewPosted DOM nodes
             if (mappedNodes.length > 0) {
                 ko.utils.replaceDomNodes(fixUpNodesToBeMovedOrRemoved(mappedNodes), newMappedNodes);
                 if (callbackAfterAddingNodes)

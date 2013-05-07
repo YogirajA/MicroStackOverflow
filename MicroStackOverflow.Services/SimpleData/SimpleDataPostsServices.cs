@@ -42,7 +42,7 @@ namespace MicroStackOverflow.Services.SimpleData
                            .Skip(recordsToSkip).Take(pageSize);
             return results;
         }
-        public void Update(dynamic post)
+        public void UpdatePost(dynamic post)
         {  
             using (var transaction = _databaseContext.StackOverflowDb.BeginTransaction)
             {
@@ -51,7 +51,7 @@ namespace MicroStackOverflow.Services.SimpleData
             }
         }
 
-        public void Insert(dynamic post)
+        public void AddNewPost(dynamic post)
         {
             using (var transaction = _databaseContext.StackOverflowDb.BeginTransaction)
             {

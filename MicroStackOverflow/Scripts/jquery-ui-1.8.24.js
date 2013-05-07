@@ -3875,7 +3875,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 		var self = this, counter = this.counter;
 
 		window.setTimeout(function() {
-			if(counter == self.counter) self.refreshPositions(!hardRefresh); //Precompute after each DOM insertion, NOT on mousemove
+			if(counter == self.counter) self.refreshPositions(!hardRefresh); //Precompute after each DOM AddNewPostion, NOT on mousemove
 		},0);
 
 	},

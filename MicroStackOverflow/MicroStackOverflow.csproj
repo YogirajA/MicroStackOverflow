@@ -280,6 +280,9 @@
     <Content Include="Views\PetaPocoPosts\Search.cshtml" />
     <Content Include="Views\PetaPocoPosts\Query.cshtml" />
     <Content Include="Views\SimpleDataPosts\Index.cshtml" />
+    <Content Include="Views\SimpleDataPosts\Search.cshtml" />
+    <Content Include="Views\SimpleDataPosts\Add.cshtml" />
+    <Content Include="Views\SimpleDataPosts\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

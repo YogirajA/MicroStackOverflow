@@ -1,4 +1,4 @@
-/*! jQuery Validation Plugin - v1.10.0 - 9/7/2012
+﻿/*! jQuery Validation Plugin - v1.10.0 - 9/7/2012
 * https://github.com/jzaefferer/jquery-validation
 * Copyright (c) 2012 Jörn Zaefferer; Licensed MIT */
 
@@ -50,7 +50,7 @@ $.extend($.fn, {
 					var hidden;
 					if ( validator.settings.submitHandler ) {
 						if (validator.submitButton) {
-							// insert a hidden input as a replacement for the missing submit button
+							// AddNewPost a hidden input as a replacement for the missing submit button
 							hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
 						}
 						validator.settings.submitHandler.call( validator, validator.currentForm, event );

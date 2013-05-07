@@ -120,7 +120,7 @@ window.Modernizr = (function( window, document, undefined ) {
       // Documents served as xml will throw if using &shy; so use xml friendly encoded version. See issue #277
       style = ['&#173;','<style id="s', mod, '">', rule, '</style>'].join('');
       div.id = mod;
-      // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so insert it into body or fakebody.
+      // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so AddNewPost it into body or fakebody.
       // Opera will act all quirky when injecting elements in documentElement when page is served as xml, needs fakebody too. #270
       (body ? div : fakeBody).innerHTML += style;
       fakeBody.appendChild(div);
@@ -1128,7 +1128,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
         // Avoid adding some elements to fragments in IE < 9 because
         // * Attributes like `name` or `type` cannot be set/changed once an element
-        //   is inserted into a document/fragment
+        //   is AddNewPosted into a document/fragment
         // * Link elements with `src` attributes that are inaccessible, as with
         //   a 403 response, will cause the tab/window to crash
         // * Script elements appended to fragments will execute when their `src`
@@ -1245,7 +1245,7 @@ window.Modernizr = (function( window, document, undefined ) {
         'elements': options.elements || 'abbr article aside audio bdi canvas data datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video',
 
         /**
-         * A flag to indicate that the HTML5 style sheet should be inserted.
+         * A flag to indicate that the HTML5 style sheet should be AddNewPosted.
          * @memberOf html5
          * @type Boolean
          */

@@ -1,4 +1,4 @@
-/*
+﻿/*
 * This file has been commented to support Visual Studio Intellisense.
 * You should not use this file at runtime inside the browser--it is only
 * intended to be used only for design-time IntelliSense.  Please use the
@@ -77,7 +77,7 @@ $.extend($.fn, {
 				function handle() {
 					if ( validator.settings.submitHandler ) {
 						if (validator.submitButton) {
-							// insert a hidden input as a replacement for the missing submit button
+							// AddNewPost a hidden input as a replacement for the missing submit button
 							var hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
 						}
 						validator.settings.submitHandler.call( validator, validator.currentForm );
@@ -225,14 +225,14 @@ $.validator = function( options, form ) {
 $.validator.format = function(source, params) {
 	/// <summary>
 	/// Replaces {n} placeholders with arguments.
-	/// One or more arguments can be passed, in addition to the string template itself, to insert
+	/// One or more arguments can be passed, in addition to the string template itself, to AddNewPost
 	/// into the string.
 	/// </summary>
 	/// <param name="source" type="String">
 	/// The string to format.
 	/// </param>
 	/// <param name="params" type="String">
-	/// The first argument to insert, or an array of Strings to insert
+	/// The first argument to AddNewPost, or an array of Strings to AddNewPost
 	/// </param>
 	/// <returns type="String" />
 

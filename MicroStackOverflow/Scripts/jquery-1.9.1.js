@@ -1335,8 +1335,8 @@ jQuery.support = (function() {
 		// IE strips leading whitespace when .innerHTML is used
 		leadingWhitespace: div.firstChild.nodeType === 3,
 
-		// Make sure that tbody elements aren't automatically inserted
-		// IE will insert them into empty tables
+		// Make sure that tbody elements aren't automatically AddNewPosted
+		// IE will AddNewPost them into empty tables
 		tbody: !div.getElementsByTagName("tbody").length,
 
 		// Make sure that link elements get serialized correctly by innerHTML
@@ -6079,7 +6079,7 @@ jQuery.fn.extend({
 	replaceWith: function( value ) {
 		var isFunc = jQuery.isFunction( value );
 
-		// Make sure that the elements are removed from the DOM before they are inserted
+		// Make sure that the elements are removed from the DOM before they are AddNewPosted
 		// this can help fix replacing a parent with child elements
 		if ( !isFunc && typeof value !== "string" ) {
 			value = jQuery( value ).not( this ).detach();
@@ -6167,7 +6167,7 @@ jQuery.fn.extend({
 					// Reenable scripts
 					jQuery.map( scripts, restoreScript );
 
-					// Evaluate executable scripts on first document insertion
+					// Evaluate executable scripts on first document AddNewPostion
 					for ( i = 0; i < hasScripts; i++ ) {
 						node = scripts[ i ];
 						if ( rscriptType.test( node.type || "" ) &&
@@ -6479,7 +6479,7 @@ jQuery.extend({
 						nodes.push( context.createTextNode( rleadingWhitespace.exec( elem )[0] ) );
 					}
 
-					// Remove IE's autoinserted <tbody> from table fragments
+					// Remove IE's autoAddNewPosted <tbody> from table fragments
 					if ( !jQuery.support.tbody ) {
 
 						// String was a <table>, *may* have spurious <tbody>
@@ -6902,7 +6902,7 @@ jQuery.extend({
 		var ret, name,
 			old = {};
 
-		// Remember the old values, and insert the new ones
+		// Remember the old values, and AddNewPost the new ones
 		for ( name in options ) {
 			old[ name ] = elem.style[ name ];
 			elem.style[ name ] = options[ name ];
@@ -8223,7 +8223,7 @@ function ajaxConvert( s, response ) {
 								if ( conv === true ) {
 									conv = converters[ conv2 ];
 
-								// Otherwise, insert the intermediate dataType
+								// Otherwise, AddNewPost the intermediate dataType
 								} else if ( converters[ conv2 ] !== true ) {
 									current = tmp[ 0 ];
 									dataTypes.splice( i--, 0, current );
