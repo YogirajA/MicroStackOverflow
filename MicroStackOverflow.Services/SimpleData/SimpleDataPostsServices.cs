@@ -19,27 +19,27 @@ namespace MicroStackOverflow.Services.SimpleData
             dynamic expression2 = true;
             dynamic expression3 = true;
             const int pageSize = 10;
-            var recordsToSkip = pageSize*(searchPostsBy.PageNumber-1);
+            var recordsToSkip = searchPostsBy.PageNumber > 0 ? pageSize*(searchPostsBy.PageNumber-1) :0;
             if (searchPostsBy.PostTypeId > 0)
             {
                 expression1 = _databaseContext.StackOverflowDb.Posts.PostTypeId == searchPostsBy.PostTypeId;
                
             }
-            if (string.IsNullOrEmpty(searchPostsBy.Tags))
+            if (!string.IsNullOrEmpty(searchPostsBy.Tags))
             {
                 expression2 = _databaseContext.StackOverflowDb.Posts.Tags.Like(searchPostsBy.Tags);
                 
             }
-            if (string.IsNullOrEmpty(searchPostsBy.Body))
+            if (!string.IsNullOrEmpty(searchPostsBy.Body))
             {
                 expression3 = _databaseContext.StackOverflowDb.Posts.Body.Like(searchPostsBy.Body);
             }
 
-            dynamic searchExpression = expression1 && expression2 && expression3;
-            var results = _databaseContext.StackOverflowDb
-                           .Posts.All.Where(searchExpression)
-                           .OrderByCreateDate()
-                           .Skip(recordsToSkip).Take(pageSize);
+            //dynamic searchExpression = expression1;// && expression2 && expression3;
+            dynamic results = _databaseContext.StackOverflowDb
+                                          .Posts.All.Where(expression1).ToList();
+                           //.OrderByCreateDate()
+                           //.Skip(recordsToSkip).Take(pageSize);
             return results;
         }
         public void UpdatePost(dynamic post)

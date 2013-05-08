@@ -1,6 +1,8 @@
 using System.Configuration;
 using MicroStackOverflow.Services.Dapper;
 using MicroStackOverflow.Services.Petapoco;
+using MicroStackOverflow.Services.SimpleData;
+using SimpleData.DAL.Infrastructure;
 using DapperDatabaseContext = Dapper.DAL.Infrastructure.DatabaseContext;
 using PetaPocoDatabaseContext = PetaPoco.DAL.Infrastructure.DatabaseContext;
 
@@ -70,6 +72,12 @@ namespace MicroStackOverflow.App_Start
             kernel.Bind<IPetaPocoPostsServices>()
                   .To<PetaPocoPostsServices>()
                   .WithConstructorArgument("databaseContext", petapocoContext);
+
+            var simpleDataContext = new DatabaseContext(connectionString);
+            kernel.Bind<ISimpleDataPostsServices>()
+                  .To<SimpleDataPostsServices>()
+                  .WithConstructorArgument("databaseContext", simpleDataContext);
+
         }        
     }
 }

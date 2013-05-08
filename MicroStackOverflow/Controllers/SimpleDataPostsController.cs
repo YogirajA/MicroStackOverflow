@@ -38,31 +38,45 @@ namespace MicroStackOverflow.Controllers
         {
             var pageNumber = (page ?? 1);
             const int pageSize = 10;
-            var startRowNum = (pageNumber - 1) * pageSize;
-            var endRowNum = startRowNum + pageSize;
+            //var startRowNum = (pageNumber - 1) * pageSize;
+            //var endRowNum = startRowNum + pageSize;
             var postSearchModel = new SearchPostsBy
             {
-                StartRowNum = startRowNum,
-                EndRowNum = endRowNum,
+                //StartRowNum = startRowNum,
+                //EndRowNum = endRowNum,
                 Body = searchModel.Body,
                 PostTypeId = 1,
                 Tags = searchModel.Tags
+                ,PageNumber = pageNumber
             };
 
-            var results = _simpleDataPostsServices.Search(postSearchModel).ToList();
-            var firstResult = results.Any() ? results.FirstOrDefault() : null;
-            if (firstResult != null)
+            var results = _simpleDataPostsServices.Search(postSearchModel);
+
+            var posts = new List<PostModel>();
+
+            foreach (dynamic result in results)
             {
-                var total = firstResult.Total;
-                var posts = results.Select().ToList();
+                posts.Add(GetPostModel(result));
+            }
+            if (posts.Any())
+            {
+                var total = 366666;
                 var staticlist = new StaticPagedList<PostModel>(posts, pageNumber, pageSize, total);
                 searchModel.Posts = staticlist;
             }
+            //var firstResult = results.Any() ? results.FirstOrDefault() : null;
+            //if (firstResult != null)
+            //{
+            //    var total = firstResult.Total;
+            //    var posts = results.Select().ToList();
+            //    var staticlist = new StaticPagedList<PostModel>(posts, pageNumber, pageSize, total);
+            //    searchModel.Posts = staticlist;
+            //}
         }
 
         private PostModel GetPostModel(dynamic arg)
         {
-            return Mapper.Map<PostModel>(arg);
+            return Mapper.DynamicMap<PostModel>(arg);
         }
 
         public ActionResult Add()
@@ -73,6 +87,7 @@ namespace MicroStackOverflow.Controllers
         public ActionResult Add(PostModel postModel)
         {
             dynamic post = postModel;// needs more
+            
             post.CreationDate = DateTime.Now;
             post.OwnerUserId = 1; // Atwood
             post.OwnerDisplayName = "Jeff Atwood";
