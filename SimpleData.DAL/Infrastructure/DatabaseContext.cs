@@ -16,6 +16,7 @@ namespace SimpleData.DAL.Infrastructure
         {
             get
             {
+                //return Database.Open();
                 return Database.OpenConnection(_connectionString);
                 //Does not hold open Connection so need for dispose
             }

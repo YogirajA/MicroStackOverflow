@@ -46,7 +46,7 @@ namespace MicroStackOverflow.Controllers
                 Body = searchModel.Body,
                 PostTypeId = 1,
                 Tags = searchModel.Tags,
-                PageNumber = pageNumber
+                PageNumberForPetaPoco = pageNumber
             };
 
             var result = _petaPocoPostsServices.Search(postSearchModel);

@@ -47,10 +47,11 @@ namespace MicroStackOverflow.Controllers
                 Body = searchModel.Body,
                 PostTypeId = 1,
                 Tags = searchModel.Tags
-                ,PageNumber = pageNumber
+                ,PageNumberForSimpleData = pageNumber
             };
 
-            var results = _simpleDataPostsServices.Search(postSearchModel);
+            //dynamic results = _simpleDataPostsServices.GetFewPosts();
+            dynamic results = _simpleDataPostsServices.Search(postSearchModel);
 
             var posts = new List<PostModel>();
 

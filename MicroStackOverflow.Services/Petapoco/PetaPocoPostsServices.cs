@@ -34,7 +34,7 @@ namespace MicroStackOverflow.Services.Petapoco
             const int itemsPerPage = 10;
             using (var db = _databaseContext.StackOverflowDB)
             {   
-                return db.Page<Post>(searchPostsBy.PageNumber, itemsPerPage, sql);
+                return db.Page<Post>(searchPostsBy.PageNumberForPetaPoco, itemsPerPage, sql);
             }
         }
 

@@ -7,6 +7,7 @@
         public string Tags { get; set; }
         public int StartRowNum { get; set; }
         public int EndRowNum { get; set; }
-        public long PageNumber { get; set; } //PetaPoco
+        public long PageNumberForPetaPoco { get; set; } //PetaPoco
+        public int PageNumberForSimpleData { get; set; } //SimpleData
     }
 }

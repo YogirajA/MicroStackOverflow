@@ -14,12 +14,11 @@ namespace MicroStackOverflow.Services.SimpleData
         }
         public dynamic Search(SearchPostsBy searchPostsBy)
         {
-           
-            dynamic expression1 = true;
-            dynamic expression2 = true;
-            dynamic expression3 = true;
+
+            dynamic expression1 = _databaseContext.StackOverflowDb.Posts.Id == _databaseContext.StackOverflowDb.Posts.Id;
+            dynamic expression2 = _databaseContext.StackOverflowDb.Posts.Id == _databaseContext.StackOverflowDb.Posts.Id;
+            dynamic expression3 = _databaseContext.StackOverflowDb.Posts.Id == _databaseContext.StackOverflowDb.Posts.Id;
             const int pageSize = 10;
-            var recordsToSkip = searchPostsBy.PageNumber > 0 ? pageSize*(searchPostsBy.PageNumber-1) :0;
             if (searchPostsBy.PostTypeId > 0)
             {
                 expression1 = _databaseContext.StackOverflowDb.Posts.PostTypeId == searchPostsBy.PostTypeId;
@@ -35,11 +34,14 @@ namespace MicroStackOverflow.Services.SimpleData
                 expression3 = _databaseContext.StackOverflowDb.Posts.Body.Like(searchPostsBy.Body);
             }
 
-            //dynamic searchExpression = expression1;// && expression2 && expression3;
+           // dynamic searchExpression = expression1;// && expression2 && expression3;
+            var recordsToSkip = searchPostsBy.PageNumberForSimpleData > 0 ? pageSize * (searchPostsBy.PageNumberForSimpleData - 1) : 0;
             dynamic results = _databaseContext.StackOverflowDb
-                                          .Posts.All.Where(expression1).ToList();
-                           //.OrderByCreateDate()
-                           //.Skip(recordsToSkip).Take(pageSize);
+                              .Posts
+                              .All()
+                              .Where(expression1 && expression2 && expression3)
+                              .OrderById()
+                              .Skip(recordsToSkip).Take(pageSize);
             return results;
         }
         public void UpdatePost(dynamic post)
