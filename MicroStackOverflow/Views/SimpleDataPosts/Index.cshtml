@@ -1,5 +1,17 @@
-﻿@{
-    Layout = null;
+﻿@model dynamic
+@{
+    ViewBag.Title = "title";
 }
-
-<title>Test</title>
+<div>
+    @HtmlBlocks.NavPillForSimpleData(this)
+</div>
+<div>
+    <hgroup class="title">
+        <h2>Simple.Data posts</h2>
+    </hgroup>
+    <div class="well row-fluid">
+        <div class="span6">
+            <span> This section of the site uses Simple.Data to access the data </span>
+        </div>
+    </div>
+</div>

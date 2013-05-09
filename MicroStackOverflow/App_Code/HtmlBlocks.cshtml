@@ -42,3 +42,26 @@
         </li>
     </ul>
 }
+
+@helper NavPillForSimpleData(WebViewPage page)
+{
+    <ul class="nav nav-pills">
+        @{
+            var actionName = Path.GetFileNameWithoutExtension(page.VirtualPath);
+             
+         }
+        <li class="@(actionName=="Index"?"active":"")">
+            @page.Html.ActionLink("Posts Home","Index","SimpleDataPosts")
+        </li>
+        
+        <li class="@(actionName=="Search"?"active":"")">
+            <a href="@page.Url.Action("Search","SimpleDataPosts",routeValues:null)">Search</a>   
+        </li>
+        <li class="@(actionName=="Add"?"active":"")">
+            <a href="@page.Url.Action("Add","SimpleDataPosts",routeValues:null)">Add</a>
+        </li>
+        @* <li class="@(actionName=="Query"?"active":"")">
+            <a href="@page.Url.Action("Query","SimpleDataPosts",routeValues:null)">Query</a>
+        </li>*@
+    </ul>
+}

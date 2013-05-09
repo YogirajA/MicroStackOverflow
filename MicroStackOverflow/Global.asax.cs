@@ -26,7 +26,9 @@ namespace MicroStackOverflow
 
 
             Mapper.CreateMap<SearchPostsBy, PostsSearchModel>();
+
            
+
         }
         protected void Application_BeginRequest()
         {

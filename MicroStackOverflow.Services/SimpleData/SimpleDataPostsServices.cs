@@ -26,12 +26,16 @@ namespace MicroStackOverflow.Services.SimpleData
             }
             if (!string.IsNullOrEmpty(searchPostsBy.Tags))
             {
-                expression2 = _databaseContext.StackOverflowDb.Posts.Tags.Like(searchPostsBy.Tags);
+                //seems like not supported
+                //http://stackoverflow.com/questions/16416934/fulltext-search-with-simple-data
+                //expression2 = _databaseContext.StackOverflowDb.Posts.Tags.Freetext(searchPostsBy.Tags);
                 
             }
             if (!string.IsNullOrEmpty(searchPostsBy.Body))
             {
-                expression3 = _databaseContext.StackOverflowDb.Posts.Body.Like(searchPostsBy.Body);
+                //seems like not supported
+                //http://stackoverflow.com/questions/16416934/fulltext-search-with-simple-data
+                //expression3 = _databaseContext.StackOverflowDb.Posts.Body.Freetext(searchPostsBy.Body);
             }
 
            // dynamic searchExpression = expression1;// && expression2 && expression3;
@@ -39,7 +43,8 @@ namespace MicroStackOverflow.Services.SimpleData
             dynamic results = _databaseContext.StackOverflowDb
                               .Posts
                               .All()
-                              .Where(expression1 && expression2 && expression3)
+                              .Where(expression1)
+                              //.Where(expression1 && expression2 && expression3)
                               .OrderById()
                               .Skip(recordsToSkip).Take(pageSize);
             return results;

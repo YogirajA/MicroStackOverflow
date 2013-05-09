@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using MicroStackOverflow.Helpers;
 using MicroStackOverflow.Models;
 using MicroStackOverflow.Services.Models;
 using MicroStackOverflow.Services.SimpleData;
@@ -77,7 +78,7 @@ namespace MicroStackOverflow.Controllers
 
         private PostModel GetPostModel(dynamic arg)
         {
-            return Mapper.DynamicMap<PostModel>(arg);
+            return DynamicToStatic.ToStatic<PostModel>(arg);
         }
 
         public ActionResult Add()
