@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using AutoMapper;
 using MicroStackOverflow.Helpers;
 using MicroStackOverflow.Models;
 using MicroStackOverflow.Services.Models;
@@ -39,12 +37,10 @@ namespace MicroStackOverflow.Controllers
         {
             var pageNumber = (page ?? 1);
             const int pageSize = 10;
-            //var startRowNum = (pageNumber - 1) * pageSize;
-            //var endRowNum = startRowNum + pageSize;
+          
             var postSearchModel = new SearchPostsBy
             {
-                //StartRowNum = startRowNum,
-                //EndRowNum = endRowNum,
+               
                 Body = searchModel.Body,
                 PostTypeId = 1,
                 Tags = searchModel.Tags
@@ -52,28 +48,21 @@ namespace MicroStackOverflow.Controllers
             };
 
             //dynamic results = _simpleDataPostsServices.GetFewPosts();
-            dynamic results = _simpleDataPostsServices.Search(postSearchModel);
-
+            int total;
+            dynamic results = _simpleDataPostsServices.Search(postSearchModel,out total);
+            
             var posts = new List<PostModel>();
-
+            
             foreach (dynamic result in results)
             {
                 posts.Add(GetPostModel(result));
             }
             if (posts.Any())
             {
-                var total = 366666;
+                
                 var staticlist = new StaticPagedList<PostModel>(posts, pageNumber, pageSize, total);
                 searchModel.Posts = staticlist;
             }
-            //var firstResult = results.Any() ? results.FirstOrDefault() : null;
-            //if (firstResult != null)
-            //{
-            //    var total = firstResult.Total;
-            //    var posts = results.Select().ToList();
-            //    var staticlist = new StaticPagedList<PostModel>(posts, pageNumber, pageSize, total);
-            //    searchModel.Posts = staticlist;
-            //}
         }
 
         private PostModel GetPostModel(dynamic arg)
@@ -94,9 +83,8 @@ namespace MicroStackOverflow.Controllers
             post.OwnerUserId = 1; // Atwood
             post.OwnerDisplayName = "Jeff Atwood";
 
-            var id = _simpleDataPostsServices.AddNewPost(post);
-
-            return RedirectToActionPermanent("Edit", new { @id = id });
+            var id =  _simpleDataPostsServices.AddNewPost(post);
+            return RedirectToActionPermanent("Edit", new {id });
         }
 
         public ActionResult Edit(int? id)
@@ -105,7 +93,7 @@ namespace MicroStackOverflow.Controllers
             if (id.HasValue)
             {
                 var post = _simpleDataPostsServices.GetPostById(id.Value);
-                postModel = Mapper.Map<PostModel>(post);
+                postModel = DynamicToStatic.ToStatic<PostModel>(post);
             }
 
             return View(postModel);
@@ -115,7 +103,7 @@ namespace MicroStackOverflow.Controllers
         {
             if (ModelState.IsValid)
             {
-                dynamic post = postModel;// need more
+                dynamic post = postModel;
                 _simpleDataPostsServices.UpdatePost(post);
             }
             ViewBag.IsSuccessful = false;

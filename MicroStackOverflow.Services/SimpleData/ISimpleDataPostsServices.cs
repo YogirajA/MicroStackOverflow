@@ -4,9 +4,9 @@ namespace MicroStackOverflow.Services.SimpleData
 {
     public interface ISimpleDataPostsServices
     {
-        dynamic Search(SearchPostsBy searchPostsBy);
+        dynamic Search(SearchPostsBy searchPostsBy, out int totalRecords);
         void UpdatePost(dynamic post);
-        void AddNewPost(dynamic post);
+        int AddNewPost(dynamic post);
         dynamic GetFewPosts();
         dynamic GetPostById(int id);
         dynamic GetPostByTitle(string title);

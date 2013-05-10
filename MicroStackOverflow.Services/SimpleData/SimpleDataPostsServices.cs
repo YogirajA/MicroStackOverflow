@@ -12,7 +12,7 @@ namespace MicroStackOverflow.Services.SimpleData
         {
             _databaseContext = databaseContext;
         }
-        public dynamic Search(SearchPostsBy searchPostsBy)
+        public dynamic Search(SearchPostsBy searchPostsBy,out int totalRecords)
         {
 
             dynamic expression1 = _databaseContext.StackOverflowDb.Posts.Id == _databaseContext.StackOverflowDb.Posts.Id;
@@ -26,9 +26,10 @@ namespace MicroStackOverflow.Services.SimpleData
             }
             if (!string.IsNullOrEmpty(searchPostsBy.Tags))
             {
-                //seems like not supported
+                //seems like full text search is not supported
                 //http://stackoverflow.com/questions/16416934/fulltext-search-with-simple-data
                 //expression2 = _databaseContext.StackOverflowDb.Posts.Tags.Freetext(searchPostsBy.Tags);
+                expression2 = _databaseContext.StackOverflowDb.Posts.Tags.Like(searchPostsBy.Tags);
                 
             }
             if (!string.IsNullOrEmpty(searchPostsBy.Body))
@@ -36,34 +37,38 @@ namespace MicroStackOverflow.Services.SimpleData
                 //seems like not supported
                 //http://stackoverflow.com/questions/16416934/fulltext-search-with-simple-data
                 //expression3 = _databaseContext.StackOverflowDb.Posts.Body.Freetext(searchPostsBy.Body);
+                expression3 = _databaseContext.StackOverflowDb.Posts.Body.Like(searchPostsBy.Body);
             }
 
            // dynamic searchExpression = expression1;// && expression2 && expression3;
             var recordsToSkip = searchPostsBy.PageNumberForSimpleData > 0 ? pageSize * (searchPostsBy.PageNumberForSimpleData - 1) : 0;
+            Future<int> Total;
             dynamic results = _databaseContext.StackOverflowDb
-                              .Posts
-                              .All()
-                              .Where(expression1)
-                              //.Where(expression1 && expression2 && expression3)
-                              .OrderById()
-                              .Skip(recordsToSkip).Take(pageSize);
+                            .Posts
+                            .All()
+                            .Where(expression1 && expression2 && expression3)
+                            .OrderById()
+                            .WithTotalCount(out Total)
+                            .Skip(recordsToSkip).Take(pageSize).ToList();
+            totalRecords = Total.HasValue ? Total.Value : 0;                   
             return results;
         }
         public void UpdatePost(dynamic post)
         {  
-            using (var transaction = _databaseContext.StackOverflowDb.BeginTransaction)
+            using (var transaction = _databaseContext.StackOverflowDb.BeginTransaction())
             {
                 _databaseContext.StackOverflowDb.Posts.Update(post); 
                 transaction.Commit();
             }
         }
 
-        public void AddNewPost(dynamic post)
+        public int AddNewPost(dynamic post)
         {
-            using (var transaction = _databaseContext.StackOverflowDb.BeginTransaction)
+            using (var transaction = _databaseContext.StackOverflowDb.BeginTransaction())
             {
-                _databaseContext.StackOverflowDb.Posts.Insert(post);
+                dynamic data =  _databaseContext.StackOverflowDb.Posts.Insert(post);
                 transaction.Commit();
+                return data.Id;
             }
         }
 
@@ -74,7 +79,7 @@ namespace MicroStackOverflow.Services.SimpleData
 
         public dynamic GetPostById(int id)
         {
-            return _databaseContext.StackOverflowDb.Posts.FindAllById(id);
+            return _databaseContext.StackOverflowDb.Posts.Get(id);
         }
 
 
