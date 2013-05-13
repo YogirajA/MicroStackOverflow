@@ -166,13 +166,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DapperPostsController.cs" />
+    <Compile Include="Controllers\MassivePostsController.cs" />
     <Compile Include="Controllers\PetaPocoPostsController.cs" />
-    <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\SimpleDataPostsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\DynamicToStatic.cs" />
+    <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Models\PostModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -294,6 +294,10 @@
     <Content Include="Views\SimpleDataPosts\Search.cshtml" />
     <Content Include="Views\SimpleDataPosts\Add.cshtml" />
     <Content Include="Views\SimpleDataPosts\Edit.cshtml" />
+    <Content Include="Views\MassivePosts\Index.cshtml" />
+    <Content Include="Views\MassivePosts\Edit.cshtml" />
+    <Content Include="Views\MassivePosts\Add.cshtml" />
+    <Content Include="Views\MassivePosts\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

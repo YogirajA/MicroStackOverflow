@@ -1,5 +1,6 @@
 using System.Configuration;
 using MicroStackOverflow.Services.Dapper;
+using MicroStackOverflow.Services.Massive;
 using MicroStackOverflow.Services.Petapoco;
 using MicroStackOverflow.Services.SimpleData;
 using SimpleData.DAL.Infrastructure;
@@ -77,6 +78,10 @@ namespace MicroStackOverflow.App_Start
             kernel.Bind<ISimpleDataPostsServices>()
                   .To<SimpleDataPostsServices>()
                   .WithConstructorArgument("databaseContext", simpleDataContext);
+
+            kernel.Bind<IMassivePostsServices>()
+                .To<MassivePostsServices>()
+                .WithConstructorArgument("connectionStringName", connectionStringName);
 
         }        
     }

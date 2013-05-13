@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using MicroStackOverflow.Helpers;
 using MicroStackOverflow.Models;
+using MicroStackOverflow.Services.Massive;
 using MicroStackOverflow.Services.Models;
-using MicroStackOverflow.Services.SimpleData;
 using PagedList;
 
 namespace MicroStackOverflow.Controllers
 {
-    public class SimpleDataPostsController : Controller
+    public class MassivePostsController : Controller
     {
-        private readonly ISimpleDataPostsServices _simpleDataPostsServices;
+        private readonly IMassivePostsServices _massivePostsServices;
+        //
+        // GET: /MassivePosts/
 
-        public SimpleDataPostsController(ISimpleDataPostsServices simpleDataPostsServices)
+        public MassivePostsController(IMassivePostsServices massivePostsServices)
         {
-            _simpleDataPostsServices = simpleDataPostsServices;
+            _massivePostsServices = massivePostsServices;
         }
 
-       
         public ActionResult Index()
         {
             return View();
@@ -37,10 +39,10 @@ namespace MicroStackOverflow.Controllers
         {
             var pageNumber = (page ?? 1);
             const int pageSize = 10;
-          
+
             var postSearchModel = new SearchPostsBy
             {
-               
+
                 Body = searchModel.Body,
                 PostTypeId = 1,
                 Tags = searchModel.Tags
@@ -48,18 +50,18 @@ namespace MicroStackOverflow.Controllers
             };
 
             //dynamic results = _simpleDataPostsServices.GetFewPosts();
-            int total;
-            dynamic results = _simpleDataPostsServices.Search(postSearchModel,out total);
-            
+            int total=40000;
+            dynamic results = _massivePostsServices.Search(postSearchModel);
+            total = results.TotalRecords;
             var posts = new List<PostModel>();
-            
-            foreach (dynamic result in results)
+
+            foreach (dynamic result in results.Items)
             {
                 posts.Add(GetPostModel(result));
             }
             if (posts.Any())
             {
-                
+
                 var staticlist = new StaticPagedList<PostModel>(posts, pageNumber, pageSize, total);
                 searchModel.Posts = staticlist;
             }
@@ -77,14 +79,16 @@ namespace MicroStackOverflow.Controllers
         [HttpPost]
         public ActionResult Add(PostModel postModel)
         {
-            dynamic post = postModel;// needs more
+            postModel.CreationDate = DateTime.Now;
+            postModel.OwnerUserId = 1; // Atwood
+            postModel.OwnerDisplayName = "Jeff Atwood";
+            var postToInsert = (IDictionary<string, object>) Converter.FromStaticToDynamic(postModel) ;
             
-            post.CreationDate = DateTime.Now;
-            post.OwnerUserId = 1; // Atwood
-            post.OwnerDisplayName = "Jeff Atwood";
+            if (postToInsert != null)
+                postToInsert.Remove("Id");
 
-            var id =  _simpleDataPostsServices.AddNewPost(post);
-            return RedirectToActionPermanent("Edit", new {id });
+            var id = _massivePostsServices.AddNewPost(postToInsert);
+            return RedirectToActionPermanent("Edit", new { id });
         }
 
         public ActionResult Edit(int? id)
@@ -92,7 +96,7 @@ namespace MicroStackOverflow.Controllers
             PostModel postModel = null;
             if (id.HasValue)
             {
-                dynamic post = _simpleDataPostsServices.GetPostById(id.Value);
+                dynamic post = _massivePostsServices.GetPost(id.Value);
                 postModel = Converter.FromDynamicToStatic<PostModel>(post);
             }
 
@@ -103,11 +107,12 @@ namespace MicroStackOverflow.Controllers
         {
             if (ModelState.IsValid)
             {
-                dynamic post = postModel;
-                _simpleDataPostsServices.UpdatePost(post);
+                dynamic post = Converter.FromStaticToDynamic(postModel) ;
+                _massivePostsServices.UpdatePost(post);
             }
             ViewBag.IsSuccessful = false;
             return View(postModel);
         }
+
     }
 }
