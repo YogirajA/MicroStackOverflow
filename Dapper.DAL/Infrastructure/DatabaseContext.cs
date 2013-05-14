@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Data;
 
@@ -21,7 +15,7 @@ namespace Dapper.DAL.Infrastructure
             _connectionString = connectionString;
         }
 
-        public SqlConnection Connection
+        public IDbConnection Connection
         {
             get
             {
@@ -34,7 +28,7 @@ namespace Dapper.DAL.Infrastructure
                 return _connection;
             }
         }
-        public DbConnection ProfiledConnection
+        public IDbConnection ProfiledConnection
         {
             get
             {

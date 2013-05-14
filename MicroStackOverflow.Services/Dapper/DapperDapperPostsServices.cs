@@ -18,26 +18,20 @@ namespace MicroStackOverflow.Services.Dapper
 
         public IEnumerable<Post> GetAllPosts()
         {
-            using (var db = _databaseContext)
-            {
-               return db.ProfiledConnection.GetList<Post>().ToList();
-            }
+            return _databaseContext.ProfiledConnection.GetList<Post>().ToList();
         }
 
         public Post GetPost(int id)
         {
-            using (var db = _databaseContext)
-            {
-                return db.ProfiledConnection.Get<Post>(id);
-            }
+            return _databaseContext.ProfiledConnection.Get<Post>(id);
         }
         public int UpdatePost(Post post)
         {
             int returnVal;
-            using (var db = _databaseContext)
-            using (var transaction = db.ProfiledConnection.BeginTransaction())
+            var profiledConnection = _databaseContext.ProfiledConnection;
+            using (var transaction = profiledConnection.BeginTransaction())
             {
-                returnVal = db.ProfiledConnection.Update(post, transaction);
+                returnVal = profiledConnection.Update(post, transaction);
                 transaction.Commit();
             }
             return returnVal;
@@ -45,10 +39,10 @@ namespace MicroStackOverflow.Services.Dapper
         public int AddNewPost(Post post)
         {
             int returnVal;
-            using (var db = _databaseContext)
-            using (var transaction = db.ProfiledConnection.BeginTransaction())
+            var profiledConnection = _databaseContext.ProfiledConnection;
+            using (var transaction = profiledConnection.BeginTransaction())
             {
-                returnVal = db.ProfiledConnection.Insert(post, transaction);
+                returnVal = profiledConnection.Insert(post, transaction);
                 transaction.Commit();
             }
             return returnVal;
@@ -57,7 +51,7 @@ namespace MicroStackOverflow.Services.Dapper
         public IEnumerable<PostSearResults> Search(SearchPostsBy searchPostsBy)
         {
             DynamicParameters param;
-            var sql = GetSearchSQL(searchPostsBy,out param);
+            var sql = GetSearchSql(searchPostsBy,out param);
             using (var db = _databaseContext)
             {
 
@@ -66,7 +60,9 @@ namespace MicroStackOverflow.Services.Dapper
             }
         }
 
-        private static string GetSearchSQL(SearchPostsBy searchPostsBy, out DynamicParameters param)
+        //QueryMultiple
+
+        private static string GetSearchSql(SearchPostsBy searchPostsBy, out DynamicParameters param)
         {
             var postQuery = new PostsQuery();
             param = new DynamicParameters();
@@ -92,10 +88,7 @@ namespace MicroStackOverflow.Services.Dapper
             // ReSharper restore RedundantAnonymousTypePropertyName
             return postQuery.Bind();
         }
-
-        //insert 
-
-        //update
+        
     }
 
     public class PostSearResults : Post

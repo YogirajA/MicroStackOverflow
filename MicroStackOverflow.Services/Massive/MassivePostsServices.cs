@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Globalization;
 using System.Text;
 using Massive.DAL;
 using Massive.DAL.Models;
@@ -7,20 +7,6 @@ using MicroStackOverflow.Services.Models;
 
 namespace MicroStackOverflow.Services.Massive
 {
-        //IEnumerable<Post> GetAllPosts();
-        //IEnumerable<PostSearResults> Search(SearchPostsBy searchPostsBy);
-        //int AddNewPost(Post post);
-        //Post GetPost(int id);
-        //int UpdatePost(Post post);
-    public interface IMassivePostsServices
-    {
-        dynamic GetAllPosts();
-        dynamic Search(SearchPostsBy searchPostsBy);
-        decimal AddNewPost(dynamic post);
-        dynamic GetPost(int id);
-        void UpdatePost(dynamic post);
-    }
-
     public class MassivePostsServices : IMassivePostsServices
     {
         private readonly string _connectionStringName;
@@ -57,7 +43,7 @@ namespace MicroStackOverflow.Services.Massive
             var args = new List<string>();
            
             if (searchPostsBy.PostTypeId > 0)
-                args.Add(searchPostsBy.PostTypeId.ToString());//, new { @postTypeId = searchPostsBy.PostTypeId });
+                args.Add(searchPostsBy.PostTypeId.ToString(CultureInfo.InvariantCulture));//, new { @postTypeId = searchPostsBy.PostTypeId });
 
             if (!string.IsNullOrEmpty(searchPostsBy.Body))
                 args.Add(searchPostsBy.Body);

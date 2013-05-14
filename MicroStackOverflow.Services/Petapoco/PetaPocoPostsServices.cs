@@ -17,25 +17,20 @@ namespace MicroStackOverflow.Services.Petapoco
         }
         public IEnumerable<Post> GetAllPosts()
         {
-            using (var db = _databaseContext.StackOverflowDB)
+            var db = _databaseContext.StackOverflowDB;
+            var posts = db.Query<Post>("Select * from Posts"); //query uses yield return .. fetch gets everything
+            foreach (var post in posts)
             {
-                var posts = db.Query<Post>("Select * from Posts"); //queyr uses yield return .. fetch gets everything
-                foreach (var post in posts)
-                {
-                    yield return post;
-                }
+                yield return post;
             }
         }
 
         public Page<Post> Search(SearchPostsBy searchPostsBy)
-        {
-            
+        {   
             var sql = GenerateSql(searchPostsBy);
             const int itemsPerPage = 10;
-            using (var db = _databaseContext.StackOverflowDB)
-            {   
-                return db.Page<Post>(searchPostsBy.PageNumberForPetaPoco, itemsPerPage, sql);
-            }
+            var db = _databaseContext.StackOverflowDB;
+            return db.Page<Post>(searchPostsBy.PageNumberForPetaPoco, itemsPerPage, sql);
         }
 
         private static Sql GenerateSql(SearchPostsBy searchPostsBy)
@@ -60,7 +55,7 @@ namespace MicroStackOverflow.Services.Petapoco
 
         public Post AddNewPost(Post post)
         {
-            using (var db = _databaseContext.StackOverflowDB)
+            var db = _databaseContext.StackOverflowDB;
             using (var transaction = db.GetTransaction())
             {
                 if (db.IsNew(post))   // helps to avoid multiple inserts
@@ -76,22 +71,20 @@ namespace MicroStackOverflow.Services.Petapoco
 
         public Post GetPost(int id)
         {
-            using (var db = _databaseContext.StackOverflowDB)
-            {
-                //return db.First<Post>("Select * from Post where id= @id",new{@id=id});
-                return db.SingleOrDefault<Post>("WHERE id=@0", id);
-            }
+            var db = _databaseContext.StackOverflowDB;
+            //return db.First<Post>("Select * from Post where id= @id",new{@id=id});
+            return db.SingleOrDefault<Post>("WHERE id=@0", id);
         }
 
         public int UpdatePost(Post post)
         {
-             using (var db = _databaseContext.StackOverflowDB)
-             using (var transaction = db.GetTransaction())
-             {
-                 var returnVal = db.Update(post);
-                 transaction.Complete();
-                 return returnVal;
-             }
+            var db = _databaseContext.StackOverflowDB;
+            using (var transaction = db.GetTransaction())
+            {
+                var returnVal = db.Update(post);
+                transaction.Complete();
+                return returnVal;
+            }
         }
     }
 }

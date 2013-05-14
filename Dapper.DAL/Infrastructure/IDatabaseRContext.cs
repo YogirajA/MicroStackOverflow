@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Data.Common;
-using System.Data.SqlClient;
-using StackExchange.Profiling.Data;
+using System.Data;
 
 namespace Dapper.DAL.Infrastructure
 {
     public interface IDatabaseContext : IDisposable
     {
-        SqlConnection Connection { get; }
-        DbConnection ProfiledConnection { get; }
+        IDbConnection Connection { get; }
+        IDbConnection ProfiledConnection { get; }
         
     }
 }

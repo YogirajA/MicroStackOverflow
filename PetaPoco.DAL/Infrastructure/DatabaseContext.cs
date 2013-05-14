@@ -1,9 +1,4 @@
-﻿using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
-using PetaPoco.DAL.Models;
-using StackExchange.Profiling;
-using StackExchange.Profiling.Data;
+﻿using PetaPoco.DAL.Models;
 
 namespace PetaPoco.DAL.Infrastructure
 {
@@ -11,7 +6,7 @@ namespace PetaPoco.DAL.Infrastructure
     {
         private readonly string _connectionStringName;
        
-        private StackOverflowDB _stackOverflowDB;
+        private StackOverflowDB _stackOverflowDb;
 
         public DatabaseContext(string connectionStringName)
         {
@@ -23,13 +18,13 @@ namespace PetaPoco.DAL.Infrastructure
         {
             get
             {   
-                return _stackOverflowDB ?? (_stackOverflowDB = new StackOverflowDB(_connectionStringName));
+                return _stackOverflowDb ?? (_stackOverflowDb = new StackOverflowDB(_connectionStringName));
             }
         }
         public void Dispose()
         {
-            if (_stackOverflowDB != null)
-                _stackOverflowDB.Dispose();
+            if (_stackOverflowDb != null)
+                _stackOverflowDb.Dispose();
 
             
         }

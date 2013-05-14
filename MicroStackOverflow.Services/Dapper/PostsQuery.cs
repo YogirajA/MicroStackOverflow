@@ -10,10 +10,8 @@ namespace MicroStackOverflow.Services.Dapper
         public PostsQuery()
         {
             _queryBuilder = new StringBuilder();
-            _queryBuilder.Append(
-                @"With seq as
-                                   (
-                                    SELECT tbl.*,ROW_NUMBER() OVER (ORDER BY ID ASC) rownum
+            _queryBuilder.Append(@"With seq as
+                                   (SELECT tbl.*,ROW_NUMBER() OVER (ORDER BY ID ASC) rownum
 	                                ,Count(*) OVER () Total
  	                                 FROM Posts as tbl
 	                                 where 1=1 ");
@@ -22,21 +20,21 @@ namespace MicroStackOverflow.Services.Dapper
 
         public PostsQuery ByPostType()
         {
-            _queryBuilder.Append(@"AND PostTypeId = @postTypeId");
+            _queryBuilder.Append(@" AND PostTypeId = @postTypeId");
             return this;
         }
 
         public PostsQuery ByBody()
         {
             // _queryBuilder.Append(@"AND Body like  @body ");
-            _queryBuilder.Append(@"AND FREETEXT(Body,@body) ");
+            _queryBuilder.Append(@" AND FREETEXT(Body,@body) ");
             return this;
         }
 
         public PostsQuery ByTags()
         {
             //_queryBuilder.Append(@"AND Tags like  @tags ");
-            _queryBuilder.Append(@"AND FREETEXT(Tags,@tags) ");
+            _queryBuilder.Append(@" AND FREETEXT(Tags,@tags) ");
             return this;
         }
 
