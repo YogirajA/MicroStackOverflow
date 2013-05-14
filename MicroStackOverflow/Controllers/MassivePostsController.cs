@@ -67,7 +67,7 @@ namespace MicroStackOverflow.Controllers
 
         private PostModel GetPostModel(dynamic arg)
         {
-            return Converter.FromDynamicToStatic<PostModel>(arg);
+            return TypeConverter.FromDynamicToStatic<PostModel>(arg);
         }
 
         public ActionResult Add()
@@ -80,7 +80,7 @@ namespace MicroStackOverflow.Controllers
             postModel.CreationDate = DateTime.Now;
             postModel.OwnerUserId = 1; // Atwood
             postModel.OwnerDisplayName = "Jeff Atwood";
-            var postToInsert = (IDictionary<string, object>) Converter.FromStaticToDynamic(postModel) ;
+            var postToInsert = (IDictionary<string, object>) TypeConverter.FromStaticToDynamic(postModel) ;
             
             if (postToInsert != null)
                 postToInsert.Remove("Id");
@@ -95,7 +95,7 @@ namespace MicroStackOverflow.Controllers
             if (id.HasValue)
             {
                 dynamic post = _massivePostsServices.GetPost(id.Value);
-                postModel = Converter.FromDynamicToStatic<PostModel>(post);
+                postModel = TypeConverter.FromDynamicToStatic<PostModel>(post);
             }
 
             return View(postModel);
@@ -105,7 +105,7 @@ namespace MicroStackOverflow.Controllers
         {
             if (ModelState.IsValid)
             {
-                dynamic post = Converter.FromStaticToDynamic(postModel) ;
+                dynamic post = TypeConverter.FromStaticToDynamic(postModel) ;
                 _massivePostsServices.UpdatePost(post);
                 ViewBag.IsSuccessful = true;
             }

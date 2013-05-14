@@ -67,7 +67,7 @@ namespace MicroStackOverflow.Controllers
 
         private PostModel GetPostModel(dynamic arg)
         {
-            return Converter.FromDynamicToStatic<PostModel>(arg);
+            return TypeConverter.FromDynamicToStatic<PostModel>(arg);
         }
 
         public ActionResult Add()
@@ -93,7 +93,7 @@ namespace MicroStackOverflow.Controllers
             if (id.HasValue)
             {
                 dynamic post = _simpleDataPostsServices.GetPostById(id.Value);
-                postModel = Converter.FromDynamicToStatic<PostModel>(post);
+                postModel = TypeConverter.FromDynamicToStatic<PostModel>(post);
             }
 
             return View(postModel);

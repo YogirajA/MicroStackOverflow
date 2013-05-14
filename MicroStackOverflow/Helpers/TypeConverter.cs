@@ -6,7 +6,7 @@ using System.Dynamic;
 namespace MicroStackOverflow.Helpers
 {
    // http://stackoverflow.com/questions/7778216/automapper-or-similar-allow-mapping-of-dynamic-types
-    public static class Converter
+    public static class TypeConverter
     {
         public static T FromDynamicToStatic<T>(object expando)
         {
