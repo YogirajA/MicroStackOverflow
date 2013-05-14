@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Dapper.DAL.Models;
@@ -80,7 +78,7 @@ namespace MicroStackOverflow.Controllers
 
             var id = _dapperPostsServices.AddNewPost(post);
 
-            return RedirectToActionPermanent("Edit",new{@id =id});
+            return RedirectToActionPermanent("Edit",new{id});
         }
 
         public ActionResult Edit(int? id)
@@ -101,8 +99,8 @@ namespace MicroStackOverflow.Controllers
             {
                 var post = Mapper.Map<Post>(postModel);
                 _dapperPostsServices.UpdatePost(post);
+                ViewBag.IsSuccessful = true;
             }
-            ViewBag.IsSuccessful = false;
             return View(postModel);
         }
     }

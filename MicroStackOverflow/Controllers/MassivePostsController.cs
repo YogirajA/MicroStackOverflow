@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using MicroStackOverflow.Helpers;
 using MicroStackOverflow.Models;
@@ -50,9 +49,8 @@ namespace MicroStackOverflow.Controllers
             };
 
             //dynamic results = _simpleDataPostsServices.GetFewPosts();
-            int total=40000;
             dynamic results = _massivePostsServices.Search(postSearchModel);
-            total = results.TotalRecords;
+            int total = results.TotalRecords;
             var posts = new List<PostModel>();
 
             foreach (dynamic result in results.Items)
@@ -109,8 +107,8 @@ namespace MicroStackOverflow.Controllers
             {
                 dynamic post = Converter.FromStaticToDynamic(postModel) ;
                 _massivePostsServices.UpdatePost(post);
+                ViewBag.IsSuccessful = true;
             }
-            ViewBag.IsSuccessful = false;
             return View(postModel);
         }
 

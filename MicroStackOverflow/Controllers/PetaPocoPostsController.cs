@@ -98,8 +98,8 @@ namespace MicroStackOverflow.Controllers
             {
                 var post = Mapper.Map<Post>(postModel);
                 _petaPocoPostsServices.UpdatePost(post);
+                ViewBag.IsSuccessful = true;
             }
-            ViewBag.IsSuccessful = false;
             return View(postModel);
         }
 

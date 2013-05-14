@@ -105,8 +105,9 @@ namespace MicroStackOverflow.Controllers
             {
                 dynamic post = postModel;
                 _simpleDataPostsServices.UpdatePost(post);
+                ViewBag.IsSuccessful = true;
             }
-            ViewBag.IsSuccessful = false;
+            
             return View(postModel);
         }
     }
