@@ -5,28 +5,7 @@
 <div>
    @HtmlBlocks.NavPillForSimpleData(this)
 </div>
-<hgroup class="title">
-    <h2>Add posts</h2>
-</hgroup>
-<p>
-    Add new post
-</p>
-<div class="form-horizontal well">
-     <div class="row">
-        @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
-            <div class="span12">
-                @Html.Partial("_postFields")
-                <div class="control-group">
-                    <div class="controls">
-                        <input class="btn btn-primary" type="submit" value="Add" />
-                    </div>
-                </div>
-            </div>
-        }
-     </div>
-</div>
+@Html.Partial("_AddPostForm",Model)
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

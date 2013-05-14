@@ -1,1 +1,17 @@
-﻿
+﻿@model dynamic
+@{
+    ViewBag.Title = "title";
+}
+<div>
+    @HtmlBlocks.NavPillForMassive(this)
+</div>
+<div>
+    <hgroup class="title">
+        <h2>Massive posts</h2>
+    </hgroup>
+    <div class="well row-fluid">
+        <div class="span6">
+            <span> This section of the site uses Massive to access the data </span>
+        </div>
+    </div>
+</div>

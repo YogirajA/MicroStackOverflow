@@ -65,3 +65,21 @@
         </li>*@
     </ul>
 }
+
+@helper NavPillForMassive(WebViewPage page)
+{
+    <ul class="nav nav-pills">
+        @{
+            var actionName = Path.GetFileNameWithoutExtension(page.VirtualPath);
+         }
+        <li class="@(actionName=="Index"?"active":"")">
+            @page.Html.ActionLink("Posts Home","Index","MassivePosts")
+        </li>
+        <li class="@(actionName=="Search"?"active":"")">
+            <a href="@page.Url.Action("Search","MassivePosts",routeValues:null)">Search</a>   
+        </li>
+        <li class="@(actionName=="Add"?"active":"")">
+            <a href="@page.Url.Action("Add","MassivePosts",routeValues:null)">Add</a>
+        </li>
+    </ul>
+}

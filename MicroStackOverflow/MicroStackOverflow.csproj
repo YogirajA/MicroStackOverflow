@@ -279,7 +279,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
-    <Content Include="Views\Questions\Index.cshtml" />
     <Content Include="Views\DapperPosts\Index.cshtml" />
     <Content Include="Views\DapperPosts\Search.cshtml" />
     <Content Include="Views\DapperPosts\Add.cshtml" />
@@ -298,6 +297,9 @@
     <Content Include="Views\MassivePosts\Edit.cshtml" />
     <Content Include="Views\MassivePosts\Add.cshtml" />
     <Content Include="Views\MassivePosts\Search.cshtml" />
+    <Content Include="Views\Shared\_AddPostForm.cshtml" />
+    <Content Include="Views\Shared\_EditPostForm.cshtml" />
+    <Content Include="Views\Shared\_PostSearchForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

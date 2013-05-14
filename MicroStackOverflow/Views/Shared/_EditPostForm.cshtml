@@ -1,0 +1,34 @@
+﻿@model MicroStackOverflow.Models.PostModel
+<hgroup class="title">
+    <h2>Edit posts</h2>
+</hgroup>
+<p>
+   Edit the posts
+</p>
+@if(ViewBag.IsSuccessful!=null && ViewBag.IsSuccessful)
+{
+    <div class="row">
+        <div class="span4">
+            <div class="alert alert-success">
+                <span>Everything saved Successfully!</span>
+            </div>
+        </div>
+    </div>
+}
+<div class="form-horizontal well">
+     <div class="row">
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="span12">
+                @Html.HiddenFor(model => model.Id)
+                @Html.Partial("_postFields")
+                <div class="control-group">
+                    <div class="controls">
+                        <input class="btn btn-primary" type="submit" value="Save" />
+                    </div>
+                </div>
+            </div>
+        }
+     </div>
+</div>
