@@ -59,7 +59,7 @@ namespace MicroStackOverflow.Controllers
             }
             if (posts.Any())
             {
-
+               
                 var staticlist = new StaticPagedList<PostModel>(posts, pageNumber, pageSize, total);
                 searchModel.Posts = staticlist;
             }

@@ -4,10 +4,13 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using StackExchange.Profiling;
+using StackExchange.Profiling.Data;
 
 namespace Massive.DAL {
     public static class ObjectExtensions {
@@ -104,12 +107,12 @@ namespace Massive.DAL {
             }
         }
     }
-    
     /// <summary>
     /// A class that wraps your database table in Dynamic Funtime
     /// </summary>
     public class DynamicModel : DynamicObject {
         readonly DbProviderFactory _factory;
+        //private readonly ProfiledDbProviderFactory _factory;
         readonly string _connectionString;
         public static DynamicModel Open(string connectionStringName) {
             dynamic dm = new DynamicModel(connectionStringName);
@@ -126,6 +129,7 @@ namespace Massive.DAL {
                 providerName = ConfigurationManager.ConnectionStrings[connectionStringName].ProviderName;
             
             _factory = DbProviderFactories.GetFactory(providerName);
+            
             _connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
         }
 
