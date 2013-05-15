@@ -22,6 +22,9 @@ namespace Dapper.DAL.Infrastructure
                 if (_connection == null)
                     _connection = new SqlConnection(_connectionString);
 
+                if (string.IsNullOrEmpty(_connection.ConnectionString))
+                    _connection.ConnectionString = _connectionString;
+
                 if (_connection.State != ConnectionState.Open)
                     _connection.Open();
 
@@ -34,6 +37,9 @@ namespace Dapper.DAL.Infrastructure
             {
                 if (_connection == null)
                     _connection = new SqlConnection(_connectionString);
+
+                if (string.IsNullOrEmpty(_connection.ConnectionString))
+                    _connection.ConnectionString = _connectionString;
 
                 if (_connection.State != ConnectionState.Open)
                     _connection.Open();
