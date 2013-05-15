@@ -18,17 +18,23 @@ namespace MicroStackOverflow.Services.Dapper
 
         public IEnumerable<Post> GetAllPosts()
         {
-            return _databaseContext.ProfiledConnection.GetList<Post>().ToList();
+            using (var profiledConnection = _databaseContext.ProfiledConnection)
+            {
+                return profiledConnection.GetList<Post>().ToList();
+            }
         }
 
         public Post GetPost(int id)
         {
-            return _databaseContext.ProfiledConnection.Get<Post>(id);
+            using (var profiledConnection = _databaseContext.ProfiledConnection)
+            {
+                return profiledConnection.Get<Post>(id);
+            }
         }
         public int UpdatePost(Post post)
         {
             int returnVal;
-            var profiledConnection = _databaseContext.ProfiledConnection;
+            using (var profiledConnection = _databaseContext.ProfiledConnection)
             using (var transaction = profiledConnection.BeginTransaction())
             {
                 returnVal = profiledConnection.Update(post, transaction);
@@ -39,7 +45,7 @@ namespace MicroStackOverflow.Services.Dapper
         public int AddNewPost(Post post)
         {
             int returnVal;
-            var profiledConnection = _databaseContext.ProfiledConnection;
+            using (var profiledConnection = _databaseContext.ProfiledConnection)
             using (var transaction = profiledConnection.BeginTransaction())
             {
                 returnVal = profiledConnection.Insert(post, transaction);
@@ -52,10 +58,10 @@ namespace MicroStackOverflow.Services.Dapper
         {
             DynamicParameters param;
             var sql = GetSearchSql(searchPostsBy,out param);
-            using (var db = _databaseContext)
+            using (var profiledConnection = _databaseContext.ProfiledConnection)
             {
 
-                var posts = db.ProfiledConnection.Query<PostSearResults>(sql, param);
+                var posts = profiledConnection.Query<PostSearResults>(sql, param);
                 return posts.ToList();
             }
         }
